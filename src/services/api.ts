@@ -11,7 +11,19 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const tg = (window as any).Telegram?.WebApp;
   const initData = tg?.initData ;
-  config.headers.Authorization = `tma ${initData}`;
+  
+  // Debug log for identifying why initData might be missing
+  console.log('TMA Auth Check:', { 
+    hasWebApp: !!(window as any).Telegram?.WebApp, 
+    initDataLength: initData?.length || 0,
+    platform: tg?.platform
+  });
+
+  if (initData) {
+    config.headers.Authorization = `tma ${initData}`;
+  } else {
+    console.error('Telegram initData is empty. Request will lack authorization header.');
+  }
   return config;
 });
 
@@ -43,10 +55,6 @@ export interface CreateOrderPayload {
 export const orderService = {
   createOrder: async (data: CreateOrderPayload, photo?: File) => {
     const formData = new FormData();
-    // Wrap the profile data to match the expected structure if needed, 
-    // but the backend submitOrderWrapper handles the JSON structure if sent as individual fields or nested.
-    // Let's use stringify for the nested objects to ensure multipart handles them easily.
-    
     formData.append('fullName', data.fullName);
     formData.append('phoneNumber', data.phoneNumber);
     formData.append('city', data.city);

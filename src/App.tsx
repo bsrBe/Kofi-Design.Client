@@ -16,6 +16,12 @@ function App() {
 
     // Initialize Telegram WebApp
     const tg = (window as any).Telegram?.WebApp;
+    console.log('WebApp Initializing:', {
+      exists: !!tg,
+      initData: !!tg?.initData,
+      version: tg?.version
+    });
+
     if (tg) {
       tg.ready();
       tg.expand();
