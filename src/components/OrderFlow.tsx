@@ -34,6 +34,7 @@ interface OrderFormState {
     colorPreference: string;
     termsAccepted: boolean;
     revisionPolicyAccepted: boolean;
+    agreedToTerms: boolean;
 }
 
 export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
@@ -128,16 +129,17 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
                 measurements: formData.measurements as any,
                 bodyConcerns: formData.bodyConcerns || '',
                 colorPreference: formData.colorPreference || '',
-                termsAccepted: formData.termsAccepted || false,
-                revisionPolicyAccepted: formData.termsAccepted || false, // Use terms as proxy for simplicity in prototype
+                termsAccepted: formData.agreedToTerms || false,
+                revisionPolicyAccepted: formData.agreedToTerms || false, // Use terms as proxy for simplicity in prototype
             };
 
             await orderService.createOrder(payload as any, inspirationPhoto || undefined);
             localStorage.removeItem('kofi_order_form');
             setShowSuccess(true);
-        } catch (error) {
+        } catch (error: any) {
             console.error('Submission failed:', error);
-            setSubmissionError('Failed to submit order. Please check your connection or try again later.');
+            const message = error.response?.data?.message || error.response?.data?.error || 'Failed to submit order. Please check your connection or try again later.';
+            setSubmissionError(message);
         } finally {
             setIsSubmitting(false);
         }
@@ -687,7 +689,7 @@ const TimelineStep = ({ data, update, onNext, onBack }: any) => {
                     <span className="text-white/20 text-[10px] font-bold uppercase tracking-widest hidden md:block italic">Progress saved automatically</span>
                     <button
                         onClick={onNext}
-                        disabled={!data.preferredDeliveryDate}
+                        disabled={!data.preferredDeliveryDate || !data.eventDate}
                         className="bg-primary text-white py-4 px-10 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         Continue to Measurements

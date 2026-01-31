@@ -1,4 +1,4 @@
-import { Diamond, Instagram, Menu, X } from 'lucide-react';
+import { Instagram, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '../lib/utils';
 
@@ -9,6 +9,20 @@ interface NavbarProps {
     onCollections?: () => void;
     currentView?: string;
 }
+
+const Logo = ({ className }: { className?: string }) => (
+    <svg
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+    >
+        <path
+            d="M42.1739 20.1739L27.8261 5.82609C29.1366 7.13663 28.3989 10.1876 26.2002 13.7654C24.8538 15.9564 22.9595 18.3449 20.6522 20.6522C18.3449 22.9595 15.9564 24.8538 13.7654 26.2002C10.1876 28.3989 7.13663 29.1366 5.82609 27.8261L20.1739 42.1739C21.4845 43.4845 24.5355 42.7467 28.1133 40.548C30.3042 39.2016 32.6927 37.3073 35 35C37.3073 32.6927 39.2016 30.3042 40.548 28.1133C42.7467 24.5355 43.4845 21.4845 42.1739 20.1739Z"
+            fill="currentColor"
+        />
+    </svg>
+);
 
 export const Navbar = ({ onStartOrder, onHome, onMyOrders, onCollections, currentView }: NavbarProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,7 +43,7 @@ export const Navbar = ({ onStartOrder, onHome, onMyOrders, onCollections, curren
             <header className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-4">
                 <div onClick={() => handleAction(onHome)} className="flex items-center gap-3 md:gap-4 text-accent-gold cursor-pointer">
                     <div className="size-6 md:size-8 text-accent-gold flex-shrink-0">
-                        <Diamond className="w-full h-full fill-current" />
+                        <Logo className="w-full h-full" />
                     </div>
                     <h2 className="text-slate-900 dark:text-white text-base md:text-xl font-bold tracking-tight uppercase whitespace-nowrap">Kofi's Design</h2>
                 </div>
@@ -115,7 +129,7 @@ export const Navbar = ({ onStartOrder, onHome, onMyOrders, onCollections, curren
 
                 <div className="absolute top-6 left-6" onClick={() => setIsMenuOpen(false)}>
                     <div className="flex items-center gap-3 text-accent-gold">
-                        <Diamond className="size-5 fill-current" />
+                        <Logo className="size-5" />
                         <h2 className="text-white text-sm font-bold tracking-widest uppercase">Kofi's Design</h2>
                     </div>
                 </div>
@@ -130,7 +144,7 @@ export const Footer = () => {
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
                 <div className="flex flex-col items-center md:items-start gap-4">
                     <div className="flex items-center gap-3 text-accent-gold">
-                        <Diamond className="size-5 fill-current" />
+                        <Logo className="size-5" />
                         <h2 className="text-slate-900 dark:text-white text-lg font-bold tracking-widest uppercase">Kofi's Design</h2>
                     </div>
                     <p className="text-slate-500 dark:text-white/40 text-sm max-w-xs text-center md:text-left">
