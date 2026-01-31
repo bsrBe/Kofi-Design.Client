@@ -82,7 +82,7 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
                     updateFormData(data.profile);
 
                     // Auto-skip to Step 2 if we're on Step 1
-                    setStep(prev => prev === 1 ? 2 : prev);
+                    setStep(current => current === 1 ? 2 : current);
                 }
             } catch (error) {
                 console.error("Failed to fetch profile", error);
