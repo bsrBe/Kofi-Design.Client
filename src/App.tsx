@@ -16,15 +16,16 @@ function App() {
 
     // Initialize Telegram WebApp
     const tg = (window as any).Telegram?.WebApp;
-    console.log('WebApp Initializing:', {
-      exists: !!tg,
-      initData: !!tg?.initData,
-      version: tg?.version
-    });
 
     if (tg) {
       tg.ready();
       tg.expand();
+
+      // Redirect to bot if initData is missing (ensures /start flow)
+      if (!tg.initData) {
+        window.location.href = 'https://t.me/kofiDesign_bot?start=app';
+        return;
+      }
     }
 
     // Handle deep linking from Telegram

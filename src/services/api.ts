@@ -11,18 +11,13 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const tg = (window as any).Telegram?.WebApp;
   const initData = tg?.initData ;
-  
-  // Debug log for identifying why initData might be missing
-  console.log('TMA Auth Check:', { 
-    hasWebApp: !!(window as any).Telegram?.WebApp, 
-    initDataLength: initData?.length || 0,
-    platform: tg?.platform
-  });
 
-  if (initData) {
+  // V2 Fix: Ensure we NEVER send 'tma undefined'
+  if (initData && initData !== 'undefined' && initData !== '') {
     config.headers.Authorization = `tma ${initData}`;
   } else {
-    console.error('Telegram initData is empty. Request will lack authorization header.');
+    // If we reach here in a Mini App, something is wrong with the launch context
+    console.error('Telegram initData is invalid or missing.');
   }
   return config;
 });
