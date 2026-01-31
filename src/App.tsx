@@ -13,6 +13,13 @@ function App() {
   useEffect(() => {
     document.documentElement.classList.add('dark');
     localStorage.setItem('theme', 'dark');
+
+    // Handle deep linking from Telegram
+    const params = new URLSearchParams(window.location.search);
+    const view = params.get('view');
+    if (view === 'my-orders') setCurrentView('my-orders');
+    if (view === 'collections') setCurrentView('collections');
+    if (view === 'home') setCurrentView('home');
   }, []);
 
   const handleStartOrder = () => setCurrentView('order-flow');
