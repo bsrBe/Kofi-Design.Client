@@ -1,4 +1,5 @@
-import { Diamond, Instagram } from 'lucide-react';
+import { Diamond, Instagram, Menu, X } from 'lucide-react';
+import { useState } from 'react';
 import { cn } from '../lib/utils';
 
 interface NavbarProps {
@@ -10,45 +11,43 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ onStartOrder, onHome, onMyOrders, onCollections, currentView }: NavbarProps) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const navItems = [
+        { id: 'home', label: 'Home', action: onHome },
+        { id: 'my-orders', label: 'My Orders', action: onMyOrders },
+        { id: 'collections', label: 'Collections', action: onCollections },
+    ];
+
+    const handleAction = (action?: () => void) => {
+        if (action) action();
+        setIsMenuOpen(false);
+    };
+
     return (
-        <div className="w-full border-b border-white/10 dark:border-white/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-500">
+        <div className="w-full border-b border-white/10 dark:border-white/10 bg-white dark:bg-[#0a0a0c] sticky top-0 z-50 transition-colors duration-500">
             <header className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-4">
-                <div onClick={onHome} className="flex items-center gap-4 text-accent-gold cursor-pointer">
-                    <div className="size-8 text-accent-gold">
+                <div onClick={() => handleAction(onHome)} className="flex items-center gap-3 md:gap-4 text-accent-gold cursor-pointer">
+                    <div className="size-6 md:size-8 text-accent-gold flex-shrink-0">
                         <Diamond className="w-full h-full fill-current" />
                     </div>
-                    <h2 className="text-slate-900 dark:text-white text-xl font-bold tracking-tight uppercase">Kofi's Design</h2>
+                    <h2 className="text-slate-900 dark:text-white text-base md:text-xl font-bold tracking-tight uppercase whitespace-nowrap">Kofi's Design</h2>
                 </div>
 
+                {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-10">
-                    <button
-                        onClick={onHome}
-                        className={cn(
-                            "transition-colors text-sm font-medium",
-                            currentView === 'home' ? "text-accent-gold" : "text-slate-600 dark:text-white/70 hover:text-accent-gold"
-                        )}
-                    >
-                        Home
-                    </button>
-                    <button
-                        onClick={onMyOrders}
-                        className={cn(
-                            "transition-colors text-sm font-medium",
-                            currentView === 'my-orders' || currentView === 'order-details' ? "text-accent-gold" : "text-slate-600 dark:text-white/70 hover:text-accent-gold"
-                        )}
-                    >
-                        My Orders
-                    </button>
-                    <button
-                        onClick={onCollections}
-                        className={cn(
-                            "transition-colors text-sm font-medium",
-                            currentView === 'collections' ? "text-accent-gold" : "text-slate-600 dark:text-white/70 hover:text-accent-gold"
-                        )}
-                    >
-                        Collections
-                    </button>
-
+                    {navItems.map((item) => (
+                        <button
+                            key={item.id}
+                            onClick={item.action}
+                            className={cn(
+                                "transition-colors text-sm font-medium",
+                                currentView === item.id || (item.id === 'my-orders' && currentView === 'order-details') ? "text-accent-gold" : "text-slate-600 dark:text-white/70 hover:text-accent-gold"
+                            )}
+                        >
+                            {item.label}
+                        </button>
+                    ))}
 
                     <button
                         onClick={onStartOrder}
@@ -57,7 +56,70 @@ export const Navbar = ({ onStartOrder, onHome, onMyOrders, onCollections, curren
                         Start Your Order
                     </button>
                 </nav>
+
+                {/* Mobile Icons */}
+                <div className="flex md:hidden items-center gap-4">
+                    <button
+                        onClick={onStartOrder}
+                        className="bg-primary text-white p-2 rounded-lg text-[10px] font-bold uppercase tracking-widest px-3"
+                    >
+                        Order
+                    </button>
+                    <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-900 dark:text-white">
+                        {isMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+                    </button>
+                </div>
             </header>
+
+            {/* Mobile Menu Overlay */}
+            <div className={cn(
+                "fixed inset-0 bg-[#0a0a0c] opacity-100 z-[60] flex flex-col pt-24 px-8 gap-8 transition-transform duration-500 md:hidden",
+                isMenuOpen ? "translate-x-0" : "translate-x-full"
+            )}>
+                <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="absolute top-6 right-6 text-white p-2"
+                >
+                    <X className="size-8" />
+                </button>
+
+                <div className="flex flex-col gap-8 mt-10">
+                    {navItems.map((item) => (
+                        <button
+                            key={item.id}
+                            onClick={() => handleAction(item.action)}
+                            className={cn(
+                                "text-4xl font-bold text-left tracking-tighter transition-colors",
+                                currentView === item.id ? "text-primary" : "text-white"
+                            )}
+                        >
+                            {item.label}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="mt-auto pb-12 flex flex-col gap-6 border-t border-white/10 pt-8">
+                    <p className="text-white/40 text-xs font-medium uppercase tracking-[0.2em]">Contact Atelier</p>
+                    <div className="flex items-center gap-4">
+                        <a href="#" className="size-12 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-accent-gold">
+                            <Instagram className="size-6" />
+                        </a>
+                    </div>
+                    <button
+                        onClick={() => handleAction(onStartOrder)}
+                        className="w-full bg-primary text-white py-5 rounded-2xl text-lg font-bold shadow-xl shadow-primary/20 uppercase tracking-widest"
+                    >
+                        Start Custom Order
+                    </button>
+                </div>
+
+                <div className="absolute top-6 left-6" onClick={() => setIsMenuOpen(false)}>
+                    <div className="flex items-center gap-3 text-accent-gold">
+                        <Diamond className="size-5 fill-current" />
+                        <h2 className="text-white text-sm font-bold tracking-widest uppercase">Kofi's Design</h2>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
@@ -75,9 +137,6 @@ export const Footer = () => {
                         Refining the art of bespoke tailoring for the modern woman.
                     </p>
                 </div>
-                <div className="flex gap-10 text-slate-400 dark:text-white/60 text-sm font-medium">
-                    {/* Links removed */}
-                </div>
 
                 <div className="flex items-center gap-4">
                     <a href="#" className="size-10 rounded-full border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-white/40 hover:text-accent-gold hover:border-accent-gold transition-all">
@@ -85,7 +144,7 @@ export const Footer = () => {
                     </a>
                 </div>
 
-                <div className="text-center text-slate-300 dark:text-white/20 text-[10px] uppercase tracking-widest mt-4 md:mt-0 font-bold">
+                <div className="text-center text-slate-300 dark:text-white/20 text-[10px] uppercase tracking-widest font-bold">
                     © 2026 Kofi's Design Atelier. All Rights Reserved.
                 </div>
             </div>

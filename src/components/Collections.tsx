@@ -43,26 +43,26 @@ export const Collections = ({ onStartOrder }: { onStartOrder: () => void }) => {
                     className="flex flex-col items-center gap-6"
                 >
                     <div className="flex items-center gap-3 text-accent-gold mb-2">
-                        <Diamond className="size-5 fill-current" />
+                        <Diamond className="size-4 md:size-5 fill-current" />
                         <span className="text-[10px] font-bold tracking-[0.4em] uppercase">The Atelier Vault</span>
                     </div>
-                    <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-none uppercase gold-glow">
+                    <h1 className="text-4xl md:text-8xl font-black tracking-tight leading-none uppercase gold-glow">
                         Curated <br /> Collections
                     </h1>
-                    <p className="text-white/40 max-w-2xl mx-auto text-lg font-light leading-relaxed mt-4">
+                    <p className="text-white/40 max-w-2xl mx-auto text-base md:text-lg font-light leading-relaxed mt-4 px-4">
                         Explore our seasonal masterpieces, each a testament to artisanal perfection and timeless elegance. Handcrafted in our private atelier.
                     </p>
                 </motion.div>
             </header>
 
             <nav className="max-w-7xl mx-auto px-6 mb-16">
-                <div className="flex flex-wrap justify-center items-center gap-4 border-y border-white/5 py-8">
+                <div className="flex flex-wrap justify-center items-center gap-2 md:gap-4 border-y border-white/5 py-6 md:py-8">
                     {allTags.map((tag) => (
                         <button
                             key={tag}
                             onClick={() => setActiveTag(tag)}
                             className={cn(
-                                "px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all border",
+                                "px-6 md:px-8 py-2 md:py-3 rounded-full text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] transition-all border",
                                 activeTag === tag
                                     ? "bg-primary border-primary text-white shadow-lg shadow-primary/20"
                                     : "bg-white/5 border-white/10 text-white/40 hover:text-white hover:border-white/30"
@@ -111,18 +111,18 @@ export const Collections = ({ onStartOrder }: { onStartOrder: () => void }) => {
                                         </div>
                                     </div>
 
-                                    <div className="p-10 flex flex-col gap-6">
+                                    <div className="p-8 md:p-10 flex flex-col gap-6">
                                         <div className="flex flex-col gap-2">
                                             <span className="text-accent-gold text-[10px] font-bold uppercase tracking-[0.3em]">Masterpiece</span>
                                             <div className="flex justify-between items-end">
-                                                <h3 className="text-3xl font-bold tracking-tight">{item.title}</h3>
+                                                <h3 className="text-2xl md:text-3xl font-bold tracking-tight">{item.title}</h3>
                                             </div>
                                         </div>
 
                                         <div className="flex items-center gap-4 pt-4">
                                             <button
                                                 onClick={onStartOrder}
-                                                className="flex-1 bg-white text-black py-4 px-8 rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-accent-gold hover:text-white transition-all flex items-center justify-center gap-3"
+                                                className="flex-1 bg-white text-black py-4 px-6 md:px-8 rounded-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-accent-gold hover:text-white transition-all flex items-center justify-center gap-3"
                                             >
                                                 <ShoppingBag className="size-4" />
                                                 Start Your Version
@@ -138,19 +138,19 @@ export const Collections = ({ onStartOrder }: { onStartOrder: () => void }) => {
                     </div>
                 )}
 
-                <div className="mt-24 p-16 rounded-[60px] bg-gradient-to-br from-charcoal/50 to-background-dark border border-white/5 text-center relative overflow-hidden">
+                <div className="mt-24 p-8 md:p-16 rounded-[40px] md:rounded-[60px] bg-gradient-to-br from-charcoal/50 to-background-dark border border-white/5 text-center relative overflow-hidden">
                     <div className="absolute top-0 right-0 size-64 bg-primary/10 blur-[120px]" />
                     <div className="relative z-10 flex flex-col items-center gap-8">
-                        <div className="size-16 rounded-3xl bg-accent-gold/10 flex items-center justify-center text-accent-gold">
-                            <Diamond className="size-8 fill-current" />
+                        <div className="size-12 md:size-16 rounded-2xl md:rounded-3xl bg-accent-gold/10 flex items-center justify-center text-accent-gold">
+                            <Diamond className="size-6 md:size-8 fill-current" />
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Need something truly unique?</h2>
-                        <p className="text-white/40 max-w-xl text-lg font-light leading-relaxed">
+                        <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Need something truly unique?</h2>
+                        <p className="text-white/40 max-w-xl text-base md:text-lg font-light leading-relaxed">
                             While our collections showcase our vision, we thrive on creating entirely new silhouettes specifically for you.
                         </p>
                         <button
                             onClick={onStartOrder}
-                            className="bg-primary text-white py-5 px-12 rounded-full text-sm font-bold uppercase tracking-[0.2em] hover:bg-primary/90 transition-all shadow-2xl shadow-primary/20 flex items-center gap-4"
+                            className="bg-primary text-white py-5 px-10 md:px-12 rounded-full text-xs md:text-sm font-bold uppercase tracking-[0.2em] hover:bg-primary/90 transition-all shadow-2xl shadow-primary/20 flex items-center gap-4"
                         >
                             Begin Bespoke Journey
                             <ChevronRight className="size-5" />

@@ -125,8 +125,8 @@ export const OrderDetails = ({ orderId, onBack }: OrderDetailsProps) => {
                                 {order.isRush ? 'Priority Production' : 'Standard Production'}
                             </span>
                         </div>
-                        <h1 className="text-white text-6xl font-bold tracking-tight">Order #KD-{order._id.substring(order._id.length - 4).toUpperCase()}</h1>
-                        <p className="text-white/40 text-xl font-light">{order.orderType === 'custom_event_dress' ? 'Event Dress' : order.orderType === 'signature_dress' ? 'Signature Dress' : order.orderType} • <span className="text-white">{order.clientProfile?.fullName}</span></p>
+                        <h1 className="text-white text-3xl md:text-6xl font-bold tracking-tight px-0">Order #KD-{order._id.substring(order._id.length - 4).toUpperCase()}</h1>
+                        <p className="text-white/40 text-base md:text-xl font-light">{order.orderType === 'custom_event_dress' ? 'Event Dress' : order.orderType === 'signature_dress' ? 'Signature Dress' : order.orderType} • <span className="text-white">{order.clientProfile?.fullName}</span></p>
                     </div>
 
                     <div className="flex items-center gap-4 w-full md:w-auto">
@@ -139,8 +139,8 @@ export const OrderDetails = ({ orderId, onBack }: OrderDetailsProps) => {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                    <div className="lg:col-span-4 bg-charcoal/30 border border-white/5 rounded-[40px] p-10 h-fit backdrop-blur-sm">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10">
+                    <div className="lg:col-span-4 bg-charcoal/30 border border-white/5 rounded-3xl md:rounded-[40px] p-6 md:p-10 h-fit backdrop-blur-sm">
                         <div className="flex items-center gap-4 mb-10">
                             <div className="size-10 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                                 <Clock className="size-5" />
@@ -201,13 +201,13 @@ export const OrderDetails = ({ orderId, onBack }: OrderDetailsProps) => {
                             </div>
                         </div>
 
-                        <div className="bg-charcoal/30 border border-white/5 rounded-[40px] p-10">
+                        <div className="bg-charcoal/30 border border-white/5 rounded-3xl md:rounded-[40px] p-6 md:p-10">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
                                 <div className="flex items-center gap-4">
-                                    <div className="size-10 rounded-2xl bg-accent-gold/10 flex items-center justify-center text-accent-gold">
-                                        <ShoppingBag className="size-5" />
+                                    <div className="size-8 md:size-10 rounded-xl md:rounded-2xl bg-accent-gold/10 flex items-center justify-center text-accent-gold">
+                                        <ShoppingBag className="size-4 md:size-5" />
                                     </div>
-                                    <h3 className="text-white font-bold text-2xl">Garment Specification</h3>
+                                    <h3 className="text-white font-bold text-xl md:text-2xl">Garment Specification</h3>
                                 </div>
                             </div>
 

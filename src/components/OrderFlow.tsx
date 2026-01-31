@@ -260,29 +260,29 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
     if (useReturnedProfile && returningProfile) {
         return (
             <div className="flex flex-col items-center justify-center gap-12 py-12">
-                <div className="text-center flex flex-col gap-4">
+                <div className="text-center flex flex-col gap-4 px-6 md:px-0">
                     <span className="text-primary text-[10px] font-bold uppercase tracking-[0.3em]">Welcome Back</span>
-                    <h1 className="text-white text-5xl font-bold tracking-tight">Nice to see you again, {returningProfile.fullName.split(' ')[0]}</h1>
-                    <p className="text-white/40 text-lg font-light max-w-md mx-auto">We've loaded your profile details to save you time. Would you like to use them for this order?</p>
+                    <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight px-4 md:px-0">Nice to see you again, {returningProfile.fullName.split(' ')[0]}</h1>
+                    <p className="text-white/40 text-sm md:text-lg font-light max-w-md mx-auto">We've loaded your profile details to save you time. Would you like to use them for this order?</p>
                 </div>
 
-                <div className="bg-[#1c1c1c] border border-white/5 rounded-[2.5rem] p-10 w-full max-w-md flex flex-col gap-6">
+                <div className="bg-[#1c1c1c] border border-white/5 rounded-3xl md:rounded-[2.5rem] p-6 md:p-10 w-full max-w-md flex flex-col gap-6">
                     <div className="flex items-center gap-4 border-b border-white/5 pb-6">
-                        <div className="size-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl font-bold">
+                        <div className="size-12 md:size-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl md:text-2xl font-bold">
                             {returningProfile.fullName.charAt(0)}
                         </div>
                         <div className="flex flex-col">
-                            <h3 className="text-white font-bold text-lg">{returningProfile.fullName}</h3>
-                            <p className="text-white/40 text-sm">{returningProfile.phoneNumber}</p>
+                            <h3 className="text-white font-bold text-base md:text-lg">{returningProfile.fullName}</h3>
+                            <p className="text-white/40 text-xs md:text-sm">{returningProfile.phoneNumber}</p>
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <div className="flex justify-between items-center text-sm">
+                        <div className="flex justify-between items-center text-xs md:text-sm">
                             <span className="text-white/40">City</span>
                             <span className="text-white font-medium">{returningProfile.city}</span>
                         </div>
                         {returningProfile.instagramHandle && (
-                            <div className="flex justify-between items-center text-sm">
+                            <div className="flex justify-between items-center text-xs md:text-sm">
                                 <span className="text-white/40">Instagram</span>
                                 <span className="text-white font-medium">@{returningProfile.instagramHandle}</span>
                             </div>
@@ -312,12 +312,12 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
             <div className="flex-1 flex flex-col gap-12">
                 <div className="flex flex-col gap-4">
-                    <div className="flex justify-between items-end">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                         <div className="flex flex-col gap-2">
                             <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">Kofi's Design Portal</span>
-                            <h1 className="text-white text-5xl font-bold tracking-tight">Step 1: Client Profile</h1>
+                            <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight">Step 1: Client Profile</h1>
                         </div>
-                        <div className="flex flex-col items-end gap-1">
+                        <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-1">
                             <span className="text-white/40 text-xs font-medium uppercase tracking-widest">Step 1 of 6</span>
                             <span className="text-primary text-3xl font-bold">16%</span>
                         </div>
@@ -327,7 +327,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                     </div>
                 </div>
 
-                <p className="text-white/60 text-lg font-light leading-relaxed">Let's begin by capturing your details. This information ensures we can provide a personalized experience and keep you updated on your garment's progress.</p>
+                <p className="text-white/60 text-base md:text-lg font-light leading-relaxed">Let's begin by capturing your details. This information ensures we can provide a personalized experience and keep you updated on your garment's progress.</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col gap-3 group">
@@ -336,7 +336,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                             type="text"
                             placeholder="e.g., Sarah Jenkins"
                             autoComplete="name"
-                            className="bg-white/5 border border-white/10 rounded-2xl py-5 px-8 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-white font-medium"
+                            className="bg-white/5 border border-white/10 rounded-xl md:rounded-2xl py-4 md:py-5 px-6 md:px-8 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-white font-medium text-sm md:text-base"
                             value={data.fullName || ''}
                             onChange={(e) => update({ fullName: e.target.value })}
                         />
@@ -346,7 +346,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                         <input
                             type="tel"
                             placeholder="+251 ..."
-                            className="bg-white/5 border border-white/10 rounded-2xl py-5 px-8 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-white font-medium"
+                            className="bg-white/5 border border-white/10 rounded-xl md:rounded-2xl py-4 md:py-5 px-6 md:px-8 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-white font-medium text-sm md:text-base"
                             value={data.phoneNumber || ''}
                             onChange={(e) => update({ phoneNumber: e.target.value })}
                         />
@@ -356,7 +356,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                         <input
                             type="text"
                             placeholder="e.g., Addis Ababa"
-                            className="bg-white/5 border border-white/10 rounded-2xl py-5 px-8 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-white font-medium"
+                            className="bg-white/5 border border-white/10 rounded-xl md:rounded-2xl py-4 md:py-5 px-6 md:px-8 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-white font-medium text-sm md:text-base"
                             value={data.city || ''}
                             onChange={(e) => update({ city: e.target.value })}
                         />
@@ -368,7 +368,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                             <input
                                 type="text"
                                 placeholder="username"
-                                className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-14 pr-8 focus:ring-1 focus:ring-secondary-cyan/20 focus:border-secondary-cyan/50 outline-none transition-all text-white font-medium"
+                                className="w-full bg-white/5 border border-white/10 rounded-xl md:rounded-2xl py-4 md:py-5 pl-12 md:pl-14 pr-6 md:pr-8 focus:ring-1 focus:ring-secondary-cyan/20 focus:border-secondary-cyan/50 outline-none transition-all text-white font-medium text-sm md:text-base"
                                 value={data.instagramHandle || ''}
                                 onChange={(e) => update({ instagramHandle: e.target.value })}
                             />
@@ -376,7 +376,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                     </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-10 border-t border-white/5">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 pt-10 border-t border-white/5">
                     <button onClick={onBack} className="flex items-center gap-2 text-white/40 font-bold hover:text-white transition-all uppercase tracking-widest text-xs">
                         <span className="material-symbols-outlined !text-xl">arrow_back</span>
                         Back Home
@@ -384,7 +384,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                     <button
                         onClick={onNext}
                         disabled={!data.fullName || !data.phoneNumber || !data.city}
-                        className="bg-primary text-white py-4 px-12 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full sm:w-auto bg-primary text-white py-4 md:py-5 px-10 md:px-12 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed uppercase"
                     >
                         Continue to Style
                     </button>
@@ -392,10 +392,10 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
             </div>
 
             <div className="w-full lg:w-[450px]">
-                <div className="bg-[#1c1c1c] border border-white/5 rounded-[2.5rem] p-12 flex flex-col gap-10 sticky top-10">
+                <div className="bg-[#1c1c1c] border border-white/5 rounded-3xl md:rounded-[2.5rem] p-8 md:p-12 flex flex-col gap-10 sticky top-10">
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-white text-2xl font-bold tracking-tight">Why we need this?</h3>
-                        <p className="text-white/40 text-sm leading-relaxed">Our atelier connects with you via Telegram to ensure every fitting and adjustment is perfectly scheduled.</p>
+                        <h3 className="text-white text-xl md:text-2xl font-bold tracking-tight">Why we need this?</h3>
+                        <p className="text-white/40 text-xs md:text-sm leading-relaxed">Our atelier connects with you via Telegram to ensure every fitting and adjustment is perfectly scheduled.</p>
                     </div>
 
                     <div className="flex flex-col gap-6">
@@ -437,12 +437,12 @@ const DesignStep = ({ data, update, onNext, onBack }: any) => {
     return (
         <div className="flex flex-col gap-16">
             <div className="flex flex-col gap-4">
-                <div className="flex justify-between items-end">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                     <div className="flex flex-col gap-2">
                         <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">Crafting the Vision</span>
-                        <h1 className="text-white text-5xl font-bold tracking-tight">Step 2: Design Selection</h1>
+                        <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight">Step 2: Design Selection</h1>
                     </div>
-                    <div className="flex flex-col items-end gap-1">
+                    <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-1">
                         <span className="text-white/40 text-xs font-medium uppercase tracking-widest">Step 2 of 6</span>
                         <span className="text-primary text-3xl font-bold">33%</span>
                     </div>
@@ -458,23 +458,23 @@ const DesignStep = ({ data, update, onNext, onBack }: any) => {
                         key={type.id}
                         onClick={() => update({ orderType: type.id })}
                         className={cn(
-                            "group cursor-pointer p-10 rounded-[2.5rem] border transition-all duration-500 relative overflow-hidden flex flex-col gap-12",
+                            "group cursor-pointer p-8 md:p-10 rounded-3xl md:rounded-[2.5rem] border transition-all duration-500 relative overflow-hidden flex flex-col gap-8 md:gap-12",
                             data.orderType === type.id
                                 ? (type.color === 'primary' ? "bg-primary/10 border-primary" : "bg-secondary-cyan/10 border-secondary-cyan")
                                 : "bg-white/5 border-white/5 hover:border-white/20"
                         )}
                     >
                         <div className={cn(
-                            "size-16 rounded-2xl flex items-center justify-center transition-all duration-500",
+                            "size-12 md:size-16 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-500",
                             data.orderType === type.id
                                 ? (type.color === 'primary' ? "bg-primary text-white shadow-lg shadow-primary/40" : "bg-secondary-cyan text-black")
                                 : "bg-white/5 text-white/40 group-hover:text-white"
                         )}>
-                            <span className="material-symbols-outlined !text-3xl">{type.icon}</span>
+                            <span className="material-symbols-outlined !text-2xl md:text-3xl">{type.icon}</span>
                         </div>
-                        <div className="flex flex-col gap-4 relative z-10">
-                            <h3 className="text-white text-3xl font-bold tracking-tight">{type.title}</h3>
-                            <p className="text-white/40 text-base font-light leading-relaxed">{type.desc}</p>
+                        <div className="flex flex-col gap-3 md:gap-4 relative z-10">
+                            <h3 className="text-white text-2xl md:text-3xl font-bold tracking-tight">{type.title}</h3>
+                            <p className="text-white/40 text-sm md:text-base font-light leading-relaxed">{type.desc}</p>
                         </div>
                         <div className={cn(
                             "absolute -bottom-10 -right-10 size-40 rounded-full blur-[80px] transition-all duration-700",
@@ -488,20 +488,20 @@ const DesignStep = ({ data, update, onNext, onBack }: any) => {
 
             <div className="flex flex-col gap-8">
                 <h3 className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em]">Occasion Details</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
                     {occasions.map((occ) => (
                         <button
                             key={occ.id}
                             onClick={() => update({ occasion: occ.id })}
                             className={cn(
-                                "flex flex-col items-center gap-6 p-8 rounded-3xl border transition-all group",
+                                "flex flex-col items-center gap-4 md:gap-6 p-6 md:p-8 rounded-2xl md:rounded-3xl border transition-all group",
                                 data.occasion === occ.id
                                     ? "bg-primary text-white border-primary shadow-xl shadow-primary/20"
                                     : "bg-white/5 border-white/5 text-white/40 hover:border-white/20 hover:text-white"
                             )}
                         >
-                            <span className="material-symbols-outlined !text-3xl group-hover:scale-110 transition-transform">{occ.icon}</span>
-                            <span className="text-xs font-bold uppercase tracking-widest">{occ.label}</span>
+                            <span className="material-symbols-outlined !text-2xl md:text-3xl group-hover:scale-110 transition-transform">{occ.icon}</span>
+                            <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">{occ.label}</span>
                         </button>
                     ))}
                 </div>
@@ -512,20 +512,20 @@ const DesignStep = ({ data, update, onNext, onBack }: any) => {
                 <textarea
                     placeholder="e.g., Heavy silk, flowing chiffon, intricate lace details..."
                     rows={4}
-                    className="bg-white/5 border border-white/10 rounded-3xl py-6 px-8 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-white font-medium resize-none leading-relaxed"
+                    className="bg-white/5 border border-white/10 rounded-2xl md:rounded-3xl py-5 md:py-6 px-6 md:px-8 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-white font-medium resize-none leading-relaxed text-sm md:text-base"
                     value={data.fabricPreference || ''}
                     onChange={(e) => update({ fabricPreference: e.target.value })}
                 />
             </div>
 
-            <div className="flex items-center justify-between pt-10 border-t border-white/5">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 pt-10 border-t border-white/5">
                 <button onClick={onBack} className="flex items-center gap-2 text-white/40 font-bold hover:text-white transition-all uppercase tracking-widest text-xs">
                     <span className="material-symbols-outlined !text-xl">arrow_back</span>
                     Previous
                 </button>
                 <button
                     onClick={onNext}
-                    className="bg-primary text-white py-4 px-12 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20"
+                    className="w-full sm:w-auto bg-primary text-white py-4 md:py-5 px-10 md:px-12 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 uppercase"
                 >
                     Continue to Timeline
                 </button>
@@ -700,8 +700,7 @@ const TimelineStep = ({ data, update, onNext, onBack }: any) => {
 
 
 const MeasurementStep = ({ data, update, onNext, onBack }: any) => {
-    const [hoveredField, setHoveredField] = useState<string | null>(null);
-
+    const [selectedField, setSelectedField] = useState<string | null>(null);
 
     const fields = [
         { key: 'bust', label: 'Bust', sub: 'Widest part of the chest', guide: 'Wrap the tape level around the fullest part of your bust. Keep it snug but not tight.', image: bustGuide },
@@ -724,14 +723,14 @@ const MeasurementStep = ({ data, update, onNext, onBack }: any) => {
 
     return (
         <div className="flex flex-col lg:flex-row gap-12">
-            <div className="flex-1 flex flex-col gap-12">
-                <div className="flex flex-col gap-4">
-                    <div className="flex justify-between items-end">
+            <div className="flex-1 flex flex-col gap-10 md:gap-12">
+                <div className="flex flex-col gap-6 md:gap-8">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                         <div className="flex flex-col gap-2">
                             <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">New Custom Order</span>
-                            <h1 className="text-white text-5xl font-bold tracking-tight">Step 4: Body Measurements</h1>
+                            <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight">Step 4: Body Measurements</h1>
                         </div>
-                        <div className="flex flex-col items-end gap-1">
+                        <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-1">
                             <span className="text-white/40 text-xs font-medium uppercase tracking-widest">Step 4 of 6</span>
                             <span className="text-primary text-3xl font-bold">66%</span>
                         </div>
@@ -741,76 +740,104 @@ const MeasurementStep = ({ data, update, onNext, onBack }: any) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                     {fields.map((f) => (
-                        <div
-                            key={f.key}
-                            onMouseEnter={() => setHoveredField(f.key)}
-                            onMouseLeave={() => setHoveredField(null)}
-                            className="bg-[#1c1c1c] border border-white/5 p-8 rounded-2xl hover:border-primary/30 transition-all group relative"
-                        >
-                            <div className="flex justify-between items-start mb-6">
-                                <div className="flex flex-col gap-2">
-                                    <h3 className="font-bold text-xl text-white tracking-tight">{f.label}</h3>
-                                    <p className="text-xs text-white/30 font-light">{f.sub}</p>
+                        <div key={f.key} className="flex flex-col gap-4">
+                            <div
+                                onClick={() => setSelectedField(f.key)}
+                                className={cn(
+                                    "bg-[#1c1c1c] border p-6 md:p-8 rounded-2xl transition-all group relative cursor-pointer",
+                                    selectedField === f.key ? "border-primary/50 bg-[#222222]" : "border-white/5 hover:border-primary/30"
+                                )}
+                            >
+                                <div className="flex justify-between items-start mb-4 md:mb-6">
+                                    <div className="flex flex-col gap-1 md:gap-2">
+                                        <h3 className="font-bold text-lg md:text-xl text-white tracking-tight">{f.label}</h3>
+                                        <p className="text-[10px] md:text-xs text-white/30 font-light">{f.sub}</p>
+                                    </div>
+                                </div>
+                                <div className="relative">
+                                    <input
+                                        type="number"
+                                        className="w-full bg-black/40 border border-white/10 rounded-xl py-3 md:py-4 px-5 md:px-6 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-xl md:text-2xl font-bold text-white placeholder:text-white/5"
+                                        placeholder="0.0"
+                                        value={data.measurements?.[f.key] || ''}
+                                        onChange={(e) => handleUpdate(f.key, e.target.value)}
+                                        onFocus={() => setSelectedField(f.key)}
+                                    />
+                                    <span className="absolute right-6 top-1/2 -translate-y-1/2 text-xs md:text-sm font-bold text-white/20 uppercase tracking-widest">cm</span>
                                 </div>
                             </div>
-                            <div className="relative">
-                                <input
-                                    type="number"
-                                    className="w-full bg-black/40 border border-white/10 rounded-xl py-4 px-6 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-2xl font-bold text-white placeholder:text-white/5"
-                                    placeholder="0.0"
-                                    value={data.measurements?.[f.key] || ''}
-                                    onChange={(e) => handleUpdate(f.key, e.target.value)}
-                                />
-                                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-sm font-bold text-white/20 uppercase tracking-widest">cm</span>
-                            </div>
+
+                            <AnimatePresence>
+                                {selectedField === f.key && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        className="lg:hidden overflow-hidden"
+                                    >
+                                        <div className="p-6 bg-white/5 rounded-2xl border border-white/5 flex flex-col gap-4">
+                                            <div className="h-40 flex items-center justify-center bg-black/20 rounded-xl">
+                                                <img
+                                                    src={f.image}
+                                                    alt={f.label}
+                                                    className="h-full w-auto object-contain opacity-80"
+                                                />
+                                            </div>
+                                            <p className="text-white/40 text-[10px] leading-relaxed text-center font-medium">
+                                                {f.guide}
+                                            </p>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     ))}
                 </div>
 
-                <div className="flex items-center justify-between pt-10 border-t border-white/5">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 pt-10 border-t border-white/5">
                     <button onClick={onBack} className="flex items-center gap-2 text-white/40 font-bold hover:text-white transition-all uppercase tracking-widest text-xs">
                         <span className="material-symbols-outlined !text-xl">arrow_back</span>
                         Back
                     </button>
                     <button
                         onClick={onNext}
-                        className="bg-primary text-white py-4 px-10 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20"
+                        className="w-full sm:w-auto bg-primary text-white py-4 md:py-5 px-10 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 uppercase"
                     >
                         Continue to Step 5
                     </button>
                 </div>
             </div>
 
-            <aside className="w-full lg:w-[400px]">
-                <div className="sticky top-24 bg-[#1c1c1c] border border-white/5 rounded-3xl p-10 flex flex-col gap-6">
-                    <h2 className="text-primary text-xs font-bold uppercase tracking-[0.3em]">Measurement Guide</h2>
-                    <div className="p-4 bg-white/5 rounded-2xl border border-white/5 min-h-[300px] flex items-center justify-center">
-                        {hoveredField && fields.find(f => f.key === hoveredField)?.image ? (
+            <aside className="hidden lg:flex w-full lg:w-[400px] flex-col">
+                <div className="bg-[#1c1c1c] border border-white/5 rounded-3xl p-8 md:p-10 flex flex-col gap-6 sticky top-24">
+                    <h2 className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">Measurement Guide</h2>
+                    <div className="p-4 bg-white/5 rounded-2xl border border-white/5 min-h-[250px] md:min-h-[300px] flex items-center justify-center">
+                        {selectedField && fields.find(f => f.key === selectedField)?.image ? (
                             <img
-                                src={fields.find(f => f.key === hoveredField)?.image}
-                                alt={`${fields.find(f => f.key === hoveredField)?.label} measurement guide`}
-                                className="w-full h-auto rounded-lg opacity-90 transition-all duration-300"
+                                src={fields.find(f => f.key === selectedField)?.image}
+                                alt={`${fields.find(f => f.key === selectedField)?.label} measurement guide`}
+                                className="w-full h-auto rounded-lg opacity-90 transition-all duration-300 max-w-[200px] md:max-w-none"
                             />
                         ) : (
-                            <div className="flex flex-col items-center gap-3 text-white/20">
-                                <span className="material-symbols-outlined !text-5xl">checkroom</span>
-                                <span className="text-xs font-bold uppercase tracking-widest text-center">Hover over a field to see<br />measurement guidance</span>
+                            <div className="flex flex-col items-center gap-3 text-white/20 text-center">
+                                <span className="material-symbols-outlined !text-4xl md:text-5xl">checkroom</span>
+                                <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest">Select a field to see<br />measurement guidance</span>
                             </div>
                         )}
                     </div>
                     <div className="p-4 bg-white/5 rounded-2xl">
-                        <h4 className="text-white font-bold text-lg mb-2">
-                            {hoveredField ? fields.find(f => f.key === hoveredField)?.label : 'Instructions'}
+                        <h4 className="text-white font-bold text-base md:text-lg mb-2 text-center md:text-left">
+                            {selectedField ? fields.find(f => f.key === selectedField)?.label : 'Instructions'}
                         </h4>
-                        <p className="text-white/40 text-sm leading-relaxed">
-                            {hoveredField ? fields.find(f => f.key === hoveredField)?.guide : 'Hover over any measurement field to see specific instructions and visual guides for accurate measurements.'}
+                        <p className="text-white/40 text-[10px] md:text-sm leading-relaxed text-center md:text-left">
+                            {selectedField ? fields.find(f => f.key === selectedField)?.guide : 'Tap or click on any measurement field to see specific instructions and visual guides for accurate measurements.'}
                         </p>
                     </div>
                 </div>
             </aside>
-        </div>
+        </div >
     );
 };
 
@@ -881,14 +908,25 @@ const InspirationStep = ({ data, photo, setPhoto, update, onNext, onBack }: any)
     );
 };
 
+const ReviewItem = ({ label, value }: { label: string; value: string | number | undefined | null }) => (
+    <div className="bg-[#1c1c1c] p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-2 md:gap-4 hover:bg-[#222222] transition-colors group">
+        <span className="text-white/40 text-[10px] uppercase font-bold tracking-widest">{label}</span>
+        <span className="text-white text-base md:text-lg font-bold tracking-tight">{value || 'Not specified'}</span>
+    </div>
+);
+
 const ReviewStep = ({ data, isSubmitting, onSubmit, onBack, error, update }: any) => {
     return (
         <div className="flex flex-col gap-16 pb-20">
             <div className="flex flex-col gap-4">
-                <div className="flex justify-between items-end">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                     <div className="flex flex-col gap-2">
-                        <span className="text-white/40 text-[10px] font-bold uppercase tracking-[0.2em]">Step 6 of 6</span>
-                        <h1 className="text-white text-5xl font-bold tracking-tight">Final Review</h1>
+                        <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">Final Review</span>
+                        <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight">Step 6: Confirm Order</h1>
+                    </div>
+                    <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-1">
+                        <span className="text-white/40 text-xs font-medium uppercase tracking-widest">Step 6 of 6</span>
+                        <span className="text-primary text-3xl font-bold">100%</span>
                     </div>
                 </div>
                 <div className="w-full h-[6px] bg-white/5 rounded-full overflow-hidden">
@@ -896,37 +934,30 @@ const ReviewStep = ({ data, isSubmitting, onSubmit, onBack, error, update }: any
                 </div>
             </div>
 
-            <div className="flex flex-col gap-px bg-white/5 rounded-3xl overflow-hidden border border-white/5 shadow-2xl">
-                {[
-                    { label: 'Client Name', value: data.fullName, icon: 'person' },
-                    { label: 'Style Preference', value: data.orderType === 'custom_event_dress' ? 'Custom Creation' : 'Signature Collection', icon: 'auto_awesome' },
-                    { label: 'Primary Fabric', value: data.fabricPreference || 'Not specified', icon: 'texture' },
-                    { label: 'Anticipated Delivery', value: data.preferredDeliveryDate || 'TBD', icon: 'event' },
-                ].map((item, i) => (
-                    <div key={i} className="bg-[#1c1c1c] p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:bg-[#222222] transition-colors group">
-                        <div className="flex items-center gap-4">
-                            <span className="material-symbols-outlined text-primary/40 group-hover:text-primary transition-colors">{item.icon}</span>
-                            <span className="text-white/40 text-[10px] uppercase font-bold tracking-widest">{item.label}</span>
-                        </div>
-                        <span className="text-white text-xl font-bold tracking-tight">{item.value}</span>
-                    </div>
-                ))}
+            <div className="flex flex-col gap-px bg-white/5 rounded-2xl md:rounded-3xl overflow-hidden border border-white/5 shadow-2xl">
+                <ReviewItem label="Style" value={data.orderType?.replace('_', ' ').toUpperCase()} />
+                <ReviewItem label="Occasion" value={data.occasion?.toUpperCase()} />
+                <ReviewItem label="Fabric" value={data.fabricPreference} />
+                <ReviewItem label="Event Date" value={new Date(data.eventDate).toLocaleDateString()} />
+                <ReviewItem label="Measurements" value={`${Object.keys(data.measurements || {}).length} recorded`} />
             </div>
 
             <div className="flex flex-col gap-6">
                 <label className="flex items-start gap-4 cursor-pointer group">
-                    <div className="relative flex items-center">
+                    <div className="relative mt-1">
                         <input
                             type="checkbox"
-                            className="peer appearance-none size-6 rounded-lg border-2 border-white/10 checked:bg-primary checked:border-primary transition-all cursor-pointer"
-                            checked={data.termsAccepted}
-                            onChange={(e) => update({ termsAccepted: e.target.checked })}
+                            className="peer sr-only"
+                            checked={data.agreedToTerms || false}
+                            onChange={(e) => update({ agreedToTerms: e.target.checked })}
                         />
-                        <CheckCircle2 className="absolute size-4 text-white opacity-0 peer-checked:opacity-100 left-1 transition-opacity pointer-events-none" />
+                        <div className="size-5 md:size-6 rounded border-2 border-white/10 peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center">
+                            <span className="material-symbols-outlined text-white text-sm md:text-base opacity-0 peer-checked:opacity-100">check</span>
+                        </div>
                     </div>
-                    <span className="text-white/60 text-sm leading-relaxed group-hover:text-white transition-colors">
-                        I agree to the Kofi's Design Terms and Conditions that I have 1 free revision and understand that custom orders require a 30% initial deposit.
-                    </span>
+                    <p className="text-white/40 text-xs md:text-sm leading-relaxed group-hover:text-white/60 transition-colors">
+                        I understand that bespoke garments are tailored to my specific measurements and I agree to the <span className="text-primary hover:underline">Terms of Service</span>.
+                    </p>
                 </label>
             </div>
             {error && (
@@ -940,33 +971,23 @@ const ReviewStep = ({ data, isSubmitting, onSubmit, onBack, error, update }: any
                 </motion.div>
             )}
 
-            <div className="flex items-center justify-between pt-10 border-t border-white/5">
-                <button
-                    onClick={onBack}
-                    className="flex items-center gap-2 text-white/40 font-bold hover:text-white transition-all uppercase tracking-widest text-xs"
-                    disabled={isSubmitting}
-                >
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-0 pt-10 border-t border-white/5">
+                <button onClick={onBack} disabled={isSubmitting} className="flex items-center gap-2 text-white/40 font-bold hover:text-white transition-all uppercase tracking-widest text-xs disabled:opacity-30">
                     <span className="material-symbols-outlined !text-xl">arrow_back</span>
-                    Previous
+                    Revision
                 </button>
                 <button
                     onClick={onSubmit}
-                    disabled={isSubmitting || !data.termsAccepted}
-                    className={cn(
-                        "bg-primary text-white py-5 px-16 rounded-[1.25rem] text-sm font-bold tracking-[0.2em] transition-all shadow-xl shadow-primary/20 uppercase flex items-center gap-3",
-                        (isSubmitting || !data.termsAccepted) ? "opacity-30 cursor-not-allowed grayscale scale-95" : "hover:bg-primary/90 hover:scale-[1.02] active:scale-98"
-                    )}
+                    disabled={isSubmitting || !data.agreedToTerms}
+                    className="w-full sm:w-auto bg-primary text-white py-4 md:py-5 px-10 md:px-12 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed uppercase flex items-center justify-center gap-3"
                 >
                     {isSubmitting ? (
                         <>
-                            <div className="size-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            Processing...
+                            <div className="size-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                            Finalizing...
                         </>
                     ) : (
-                        <>
-                            Submit Your Order
-                            <ArrowRight className="size-5" />
-                        </>
+                        'Submit Bespoke Order'
                     )}
                 </button>
             </div>

@@ -18,16 +18,16 @@ export const Hero = ({ onStartOrder }: { onStartOrder: () => void }) => {
                         <span className="text-accent-gold uppercase tracking-[0.3em] text-xs font-bold animate-pulse">
                             Couture Excellence
                         </span>
-                        <h1 className="text-white text-5xl md:text-7xl font-extrabold leading-tight tracking-[-0.033em] gold-glow">
+                        <h1 className="text-white text-3xl sm:text-5xl md:text-7xl font-extrabold leading-tight tracking-[-0.033em] gold-glow">
                             Designed for <br />Your Moment
                         </h1>
-                        <p className="text-white/80 text-lg md:text-xl font-light max-w-xl leading-relaxed">
+                        <p className="text-white/80 text-sm md:text-xl font-light max-w-xl leading-relaxed">
                             Bespoke elegance, tailored to your unique silhouette. Experience the pinnacle of custom fashion craftsmanship in our private atelier.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full sm:w-auto px-4 sm:px-0">
                             <button
                                 onClick={onStartOrder}
-                                className="min-w-[200px] cursor-pointer bg-primary text-white py-4 px-8 rounded-lg text-base font-bold tracking-wider hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 uppercase"
+                                className="w-full sm:min-w-[200px] cursor-pointer bg-primary text-white py-4 px-8 rounded-lg text-sm md:text-base font-bold tracking-wider hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 uppercase"
                             >
                                 Start Your Order
                             </button>
@@ -65,10 +65,10 @@ export const ProcessSection = () => {
         <section className="w-full max-w-7xl px-4 md:px-10 py-20 mx-auto">
             <div className="flex flex-col gap-16">
                 <div className="flex flex-col items-center text-center gap-4">
-                    <h2 className="text-accent-gold text-sm font-bold tracking-widest uppercase">The Atelier Process</h2>
-                    <h1 className="text-slate-900 dark:text-white text-4xl md:text-5xl font-bold tracking-tight transition-colors duration-500">How It Works</h1>
+                    <h2 className="text-accent-gold text-xs font-bold tracking-widest uppercase">The Atelier Process</h2>
+                    <h1 className="text-slate-900 dark:text-white text-3xl md:text-5xl font-bold tracking-tight transition-colors duration-500">How It Works</h1>
                     <div className="w-20 h-1 bg-primary rounded-full"></div>
-                    <p className="text-slate-500 dark:text-white/60 text-lg font-light max-w-2xl mt-4 transition-colors duration-500">
+                    <p className="text-slate-500 dark:text-white/60 text-base md:text-lg font-light max-w-2xl mt-4 transition-colors duration-500 px-4">
                         From initial sketch to the final stitch, your vision is our blueprint. Every garment is an artisanal masterpiece.
                     </p>
                 </div>

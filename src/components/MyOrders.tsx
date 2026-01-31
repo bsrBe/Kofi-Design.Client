@@ -120,8 +120,8 @@ export const MyOrders = ({ onViewOrder }: { onViewOrder: (id: string) => void })
         <div className="w-full max-w-7xl mx-auto px-6 py-12 animate-in fade-in duration-700">
             <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
                 <div className="flex flex-col gap-2">
-                    <h1 className="text-white text-5xl font-bold tracking-tight">My Orders</h1>
-                    <p className="text-white/40 text-lg font-light">Track and manage your bespoke fashion pieces.</p>
+                    <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight">My Orders</h1>
+                    <p className="text-white/40 text-base md:text-lg font-light">Track and manage your bespoke fashion pieces.</p>
                 </div>
 
                 <div className="flex items-center gap-4 w-full md:w-auto">
@@ -138,14 +138,14 @@ export const MyOrders = ({ onViewOrder }: { onViewOrder: (id: string) => void })
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
                 {stats.map((stat, i) => (
-                    <div key={i} className="bg-charcoal/40 border border-white/5 p-8 rounded-3xl flex flex-col gap-1 transition-all hover:border-white/10">
+                    <div key={i} className="bg-charcoal/40 border border-white/5 p-6 md:p-8 rounded-2xl md:rounded-3xl flex flex-col gap-1 transition-all hover:border-white/10">
                         <div className="flex items-center gap-3">
                             <span className="text-white/40 text-[10px] font-bold tracking-[0.2em] uppercase">{stat.label}</span>
                             {stat.badge && (
                                 <span className="bg-orange-500/10 text-orange-500 px-2 py-0.5 rounded text-[8px] font-bold tracking-widest">{stat.badge}</span>
                             )}
                         </div>
-                        <span className={cn("text-5xl font-bold tracking-tighter", stat.color || "text-white")}>
+                        <span className={cn("text-4xl md:text-5xl font-bold tracking-tighter", stat.color || "text-white")}>
                             {loading ? '--' : stat.value}
                         </span>
                     </div>
@@ -153,14 +153,14 @@ export const MyOrders = ({ onViewOrder }: { onViewOrder: (id: string) => void })
             </div>
 
             <div className="flex flex-col gap-10">
-                <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                    <div className="flex items-center gap-8">
+                <div className="flex items-center justify-between border-b border-white/5 pb-0">
+                    <div className="flex items-center gap-6 md:gap-8 overflow-x-auto no-scrollbar scroll-smooth pb-4">
                         {['All Orders', 'Submitted', 'In Progress', 'Ready', 'Delivered'].map((tab) => (
                             <button
                                 key={tab}
                                 onClick={() => setActiveTab(tab.toLowerCase().replace(' ', '_'))}
                                 className={cn(
-                                    "relative pb-4 text-xs font-bold uppercase tracking-widest transition-colors",
+                                    "relative pb-4 text-[10px] md:text-xs font-bold uppercase tracking-widest transition-colors whitespace-nowrap",
                                     activeTab === tab.toLowerCase().replace(' ', '_') ? "text-primary" : "text-white/40 hover:text-white"
                                 )}
                             >
