@@ -40,10 +40,6 @@ function App() {
   const handleGoHome = () => setCurrentView('home');
   const handleGoToMyOrders = () => setCurrentView('my-orders');
   const handleGoToCollections = () => setCurrentView('collections');
-  // const handleGoToAdmin = (view: 'dashboard' | 'orders' | 'workspace' | 'revisions' = 'dashboard') => {
-  //   setAdminView(view);
-  //   setCurrentView('admin');
-  // };
   const handleViewOrderDetails = (id: string) => {
     setSelectedOrderId(id);
     setCurrentView('order-details');
