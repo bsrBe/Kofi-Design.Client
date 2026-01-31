@@ -14,6 +14,13 @@ function App() {
     document.documentElement.classList.add('dark');
     localStorage.setItem('theme', 'dark');
 
+    // Initialize Telegram WebApp
+    const tg = (window as any).Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
     // Handle deep linking from Telegram
     const params = new URLSearchParams(window.location.search);
     const view = params.get('view');
