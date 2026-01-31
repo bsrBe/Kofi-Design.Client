@@ -79,9 +79,10 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
                 if (data && data.profile) {
                     setReturningProfile(data.profile);
                     setUseReturnedProfile(true);
-                    // Pre-fill form data but don't overwrite if local changes exist? 
-                    // For now, let's just save it to state and let ProfileStep handle the UI.
                     updateFormData(data.profile);
+
+                    // Auto-skip to Step 2 if we're on Step 1
+                    setStep(prev => prev === 1 ? 2 : prev);
                 }
             } catch (error) {
                 console.error("Failed to fetch profile", error);
