@@ -1,25 +1,20 @@
 import bustDistanceImg from '../assets/gallery/photo_2026-02-02_09-49-13.jpg';
 import shoulderToBustImg from '../assets/gallery/photo_2026-02-02_09-49-38.jpg';
-import neckOpenImg from '../assets/gallery/photo_2026-02-02_09-49-42.jpg';
-import neckImg from '../assets/gallery/photo_2026-02-02_09-49-45.jpg';
+import neckDepthImg from '../assets/gallery/photo_2026-02-02_09-49-42.jpg';
+import neckCircImg from '../assets/gallery/photo_2026-02-02_09-49-45.jpg';
 import chestFrontImg from '../assets/gallery/photo_2026-02-02_09-49-56.jpg';
-import chestBackImg from '../assets/gallery/photo_2026-02-02_09-50-01.jpg';
-import waistImg from '../assets/gallery/photo_2026-02-02_09-50-04.jpg';
-import waistToHipImg from '../assets/gallery/photo_2026-02-02_09-50-07.jpg';
-import hipImg from '../assets/gallery/photo_2026-02-02_09-50-11.jpg';
-import crotchLengthImg from '../assets/gallery/photo_2026-02-02_09-50-14.jpg';
-import crotchDepthImg from '../assets/gallery/photo_2026-02-02_09-50-18.jpg';
-import waistToFloorImg from '../assets/gallery/photo_2026-02-02_09-50-21.jpg';
-import outseamImg from '../assets/gallery/photo_2026-02-02_09-50-28.jpg';
-import thighImg from '../assets/gallery/photo_2026-02-02_09-50-32.jpg';
-import kneeImg from '../assets/gallery/photo_2026-02-02_09-50-36.jpg';
-import calfImg from '../assets/gallery/photo_2026-02-02_09-50-39.jpg';
-import ankleImg from '../assets/gallery/photo_2026-02-02_09-50-44.jpg';
-import shoulderWidthImg from '../assets/gallery/photo_2026-02-02_09-50-50.jpg';
-import armholeCircImg from '../assets/gallery/photo_2026-02-02_09-50-58.jpg';
-import sleeveLengthImg from '../assets/gallery/photo_2026-02-02_09-51-03.jpg';
-import bicepImg from '../assets/gallery/photo_2026-02-02_09-51-06.jpg';
-import wristImg from '../assets/gallery/photo_2026-02-02_09-51-09.jpg';
+import shoulderWidthImg from '../assets/gallery/photo_2026-02-02_09-50-07.jpg';
+import backLengthImg from '../assets/gallery/photo_2026-02-02_09-50-11.jpg';
+import frontLengthImg from '../assets/gallery/photo_2026-02-02_09-50-14.jpg';
+import shoulderWaistFrontImg from '../assets/gallery/photo_2026-02-02_09-50-21.jpg';
+import skirtLengthImg from '../assets/gallery/photo_2026-02-02_09-50-28.jpg';
+import dressLengthImg from '../assets/gallery/photo_2026-02-02_09-50-32.jpg';
+import sleeveLengthImg from '../assets/gallery/photo_2026-02-02_09-50-36.jpg';
+import bicepImg from '../assets/gallery/photo_2026-02-02_09-50-39.jpg';
+import armholeCircImg from '../assets/gallery/photo_2026-02-02_09-50-44.jpg';
+import fullHipImg from '../assets/gallery/photo_2026-02-02_09-51-06.jpg';
+import highHipImg from '../assets/gallery/photo_2026-02-02_09-51-09.jpg';
+import genericGuide from '../assets/gallery/masterpiece_1.png';
 
 export interface MeasurementField {
     key: string;
@@ -39,39 +34,17 @@ export const MEASUREMENT_SCHEMES: Record<string, MeasurementSection[]> = {
         {
             section: "Body Circumference",
             fields: [
-                { key: 'highBust', label: 'High Bust', sub: 'Above the bust', guide: 'Measure around your chest above your bust line.', image: chestFrontImg },
                 { key: 'fullBust', label: 'Full Bust', sub: 'Widest part', guide: 'Measure around the fullest part of your bust.', image: chestFrontImg },
-                { key: 'underBust', label: 'Under-Bust', sub: 'Below the bust', guide: 'Measure around your ribs just under your bust.', image: chestFrontImg },
-                { key: 'waist', label: 'Waist', sub: 'Natural waistline', guide: 'Measure around your natural waistline.', image: waistImg },
+                { key: 'highBust', label: 'High Bust', sub: 'Above the bust', guide: 'Measure around your chest, above the bust line and under the armpins.', image: chestFrontImg },
+                { key: 'naturalWaist', label: 'Natural Waist', sub: 'Narrowest point', guide: 'Measure around your natural waistline, the narrowest part of your torso.', image: highHipImg },
+                { key: 'fullHip', label: 'Full Hip', sub: 'Widest part of buttocks', guide: 'Measure around the fullest part of your hips and buttocks.', image: fullHipImg },
             ]
         },
         {
-            section: "Length & Balance",
+            section: "Shoulder & Length",
             fields: [
-                { key: 'bustDistance', label: 'Bust Distance', sub: 'Point to point', guide: 'Measure from one bust point to the other.', image: bustDistanceImg },
-                { key: 'frontLength', label: 'Front Length', sub: 'Shoulder to waist', guide: 'Measure from shoulder to your natural waist.', image: shoulderToBustImg },
-                { key: 'shoulderToBust', label: 'Shoulder to Bust', sub: 'Shoulder to point', guide: 'Measure from shoulder to bust point.', image: shoulderToBustImg },
-                { key: 'shoulderToUnderBust', label: 'Shoulder to Under Bust', sub: 'Shoulder to under bust', guide: 'Measure from shoulder to just under your bust.', image: shoulderToBustImg },
-                { key: 'backLength', label: 'Back Length', sub: 'Neck to waist', guide: 'Measure from the neck bone to your natural waist.', image: chestBackImg },
-                { key: 'topLength', label: 'Top Length', sub: 'Shoulder to hem', guide: 'Total length of the top.', image: shoulderToBustImg },
-            ]
-        },
-        {
-            section: "Shoulder & Armhole",
-            fields: [
-                { key: 'shoulderWidth', label: 'Shoulder Width', sub: 'Seam to seam', guide: 'Measure across the back from shoulder bone to shoulder bone.', image: shoulderWidthImg },
-                { key: 'neckCirc', label: 'Neck Circumference', sub: 'Around neck', guide: 'Measure around the base of your neck.', image: neckImg },
-                { key: 'armholeDepth', label: 'Armhole Depth', sub: 'Shoulder to underarm', guide: 'Measure vertically from shoulder to underarm.', image: armholeCircImg },
-                { key: 'armholeCirc', label: 'Armhole Circumference', sub: 'Around armhole', guide: 'Measure around the shoulder and underarm.', image: armholeCircImg },
-            ]
-        },
-        {
-            section: "Sleeves (Optional)",
-            fields: [
-                { key: 'sleeveLength', label: 'Sleeve Length', sub: 'Shoulder to wrist', guide: 'Measure from shoulder tip to wrist.', image: sleeveLengthImg },
-                { key: 'upperArm', label: 'Upper Arm (Bicep)', sub: 'Widest part of arm', guide: 'Measure around the fullest part of your upper arm.', image: bicepImg },
-                { key: 'elbow', label: 'Elbow', sub: 'Around elbow', guide: 'Measure around your elbow.', image: wristImg },
-                { key: 'wristCirc', label: 'Wrist Circumference', sub: 'Around wrist', guide: 'Measure around your wrist bone.', image: wristImg },
+                { key: 'shoulderWidth', label: 'Shoulder Width', sub: 'Seam to seam', guide: 'Measure across the back from one shoulder point to the other.', image: shoulderWidthImg },
+                { key: 'topLength', label: 'Top Length', sub: 'Shoulder to desired length', guide: 'Measure from the shoulder point down to where you want the top to end.', image: frontLengthImg },
             ]
         }
     ],
@@ -79,86 +52,81 @@ export const MEASUREMENT_SCHEMES: Record<string, MeasurementSection[]> = {
         {
             section: "Body Circumference",
             fields: [
-                { key: 'highBust', label: 'High Bust', sub: 'Above the bust', guide: 'Measure around your chest above your bust line.', image: chestFrontImg },
+                { key: 'highBust', label: 'High Bust', sub: 'Above the bust', guide: 'Measure around your chest, above the bust line and under the armpins.', image: chestFrontImg },
                 { key: 'fullBust', label: 'Full Bust', sub: 'Widest part', guide: 'Measure around the fullest part of your bust.', image: chestFrontImg },
-                { key: 'underBust', label: 'Under-Bust', sub: 'Below the bust', guide: 'Measure around your ribs just under your bust.', image: chestFrontImg },
-                { key: 'naturalWaist', label: 'Natural Waist', sub: 'Narrowest point', guide: 'Measure around your natural waistline.', image: waistImg },
-                { key: 'highHip', label: 'High Hip', sub: 'Hip bone level', guide: 'Measure around your upper hip area.', image: hipImg },
-                { key: 'fullHip', label: 'Full Hip', sub: 'Widest part of buttocks', guide: 'Measure around the fullest part of your hips.', image: hipImg },
+                { key: 'underBust', label: 'Under-Bust', sub: 'Below the bust', guide: 'Measure around your ribcage, just under your bust.', image: chestFrontImg },
+                { key: 'naturalWaist', label: 'Natural Waist', sub: 'Narrowest point', guide: 'Measure around your natural waistline, the narrowest part of your torso.', image: highHipImg },
+                { key: 'highHip', label: 'High Hip', sub: 'Hip bone level', guide: 'Measure around your torso at the level of your hip bones.', image: highHipImg },
+                { key: 'fullHip', label: 'Full Hip', sub: 'Widest part of buttocks', guide: 'Measure around the fullest part of your hips and buttocks.', image: fullHipImg },
             ]
         },
         {
             section: "Front & Back Balance",
             fields: [
-                { key: 'shoulderToBustPoint', label: 'Shoulder to Bust Point', sub: 'Shoulder to point', guide: 'Measure from shoulder to bust point.', image: shoulderToBustImg },
-                { key: 'shoulderToUnderBust', label: 'Shoulder to Under Bust', sub: 'Shoulder to under bust', guide: 'Measure from shoulder to just under your bust.', image: shoulderToBustImg },
-                { key: 'bustToBust', label: 'Bust to Bust', sub: 'Point to point', guide: 'Measure from one bust point to the other.', image: bustDistanceImg },
-                { key: 'frontLength', label: 'Front Length', sub: 'Shoulder to waist', guide: 'Measure from shoulder to natural waist.', image: shoulderToBustImg },
-                { key: 'backLength', label: 'Back Length', sub: 'Neck to waist', guide: 'Measure from neck bone to natural waist.', image: chestBackImg },
-                { key: 'shoulderToWaistSide', label: 'Shoulder to Waist (Side)', sub: 'Side measurement', guide: 'Measure from shoulder to waist along the side.', image: shoulderToBustImg },
+                { key: 'shoulderToBustPoint', label: 'Shoulder to Bust Point', sub: 'Shoulder to point', guide: 'Measure from the shoulder base down to your bust point.', image: shoulderToBustImg },
+                { key: 'shoulderToUnderBust', label: 'Shoulder to Under Bust', sub: 'Shoulder to under bust', guide: 'Measure from the shoulder base down to just under the bust.', image: shoulderToBustImg },
+                { key: 'bustToBust', label: 'Bust to Bust', sub: 'Point to point', guide: 'Measure the distance between your two bust points.', image: bustDistanceImg },
+                { key: 'frontLength', label: 'Front Length', sub: 'Shoulder to waist', guide: 'Measure from the shoulder base, over the bust, to the natural waist.', image: frontLengthImg },
+                { key: 'backLength', label: 'Back Length', sub: 'Neck to waist', guide: 'Measure from the base of the neck bone to the natural waist.', image: backLengthImg },
+                { key: 'shoulderToWaistSide', label: 'Shoulder to Waist (Side)', sub: 'Side measurement', guide: 'Measure from the shoulder point to the side waist.', image: shoulderWaistFrontImg },
             ]
         },
         {
             section: "Lengths",
             fields: [
-                { key: 'waistToHip', label: 'Waist to Hip', sub: 'Waist to widest hip', guide: 'Measure from waist to the fullest part of hip.', image: waistToHipImg },
-                { key: 'waistToKnee', label: 'Waist to Knee', sub: 'Waist to knee', guide: 'Measure from waist down to the knee.', image: waistToFloorImg },
-                { key: 'waistToCalf', label: 'Waist to Calf', sub: 'Waist to calf', guide: 'Measure from waist down to the calf.', image: waistToFloorImg },
-                { key: 'waistToFloor', label: 'Waist to Floor', sub: 'Waist to floor', guide: 'Measure from waist down to the floor.', image: waistToFloorImg },
-                { key: 'fullDressLength', label: 'Full Dress Length', sub: 'Shoulder to floor', guide: 'Total length from shoulder to floor.', image: waistToFloorImg },
+                { key: 'waistToHip', label: 'Waist to Hip', sub: 'Waist to widest hip', guide: 'Measure from the waistline to the fullest part of the hip.', image: dressLengthImg },
+                { key: 'waistToKnee', label: 'Waist to Knee', sub: 'Waist to knee', guide: 'Measure from the waistline down to the level of the knee.', image: dressLengthImg },
+                { key: 'waistToCalf', label: 'Waist to Calf', sub: 'Waist to calf', guide: 'Measure from the waistline down to the fullest part of the calf.', image: dressLengthImg },
+                { key: 'waistToFloor', label: 'Waist to Floor', sub: 'Waist to floor', guide: 'Measure from the waistline down to the floor.', image: dressLengthImg },
+                { key: 'fullDressLength', label: 'Full Dress Length', sub: 'Shoulder to floor', guide: 'Measure from the shoulder point down to the floor/desired hem.', image: dressLengthImg },
             ]
         },
         {
             section: "Shoulder, Neck & Armhole",
             fields: [
-                { key: 'shoulderWidth', label: 'Shoulder Width', sub: 'Seam to seam', guide: 'Measure across the back from shoulder bone to shoulder bone.', image: shoulderWidthImg },
-                { key: 'neckCirc', label: 'Neck Circumference', sub: 'Around neck', guide: 'Measure around the base of your neck.', image: neckImg },
-                { key: 'neckWidth', label: 'Neck Width', sub: 'Width of neck opening', guide: 'Measure the width of the neck opening from side to side.', image: neckOpenImg },
-                { key: 'neckDepthFront', label: 'Neck Depth (Front)', sub: 'Front neck drop', guide: 'Measure from neck base to the center front depth.', image: neckOpenImg },
-                { key: 'armholeDepth', label: 'Armhole Depth', sub: 'Shoulder to underarm', guide: 'Measure vertically from shoulder to underarm.', image: armholeCircImg },
-                { key: 'armholeCirc', label: 'Armhole Circumference', sub: 'Around armhole', guide: 'Measure around the shoulder and underarm.', image: armholeCircImg },
+                { key: 'shoulderWidth', label: 'Shoulder Width', sub: 'Seam to seam', guide: 'Measure across the back from one shoulder point to the other.', image: shoulderWidthImg },
+                { key: 'neckCirc', label: 'Neck Circumference', sub: 'Around neck', guide: 'Measure around the base of your neck.', image: neckCircImg },
+                { key: 'neckWidth', label: 'Neck Width', sub: 'Width of neck opening', guide: 'Measure the horizontal width of your neck opening.', image: neckDepthImg },
+                { key: 'neckDepthFront', label: 'Neck Depth (Front)', sub: 'Front neck drop', guide: 'Measure vertically from the shoulder line to the desired front depth.', image: neckDepthImg },
+                { key: 'armholeDepth', label: 'Armhole Depth', sub: 'Shoulder to underarm', guide: 'Measure vertically from the shoulder point to the underarm level.', image: armholeCircImg },
+                { key: 'armholeCirc', label: 'Armhole Circumference', sub: 'Around armhole', guide: 'Measure around the shoulder and underarm in a loop.', image: armholeCircImg },
             ]
         },
         {
             section: "Sleeves (Optional)",
             fields: [
-                { key: 'sleeveLength', label: 'Sleeve Length', sub: 'Shoulder to wrist', guide: 'Measure from shoulder tip to wrist.', image: sleeveLengthImg },
+                { key: 'sleeveLength', label: 'Sleeve Length', sub: 'Shoulder to wrist', guide: 'Measure from the shoulder point down to the wrist bone.', image: sleeveLengthImg },
                 { key: 'upperArm', label: 'Upper Arm (Bicep)', sub: 'Widest part of arm', guide: 'Measure around the fullest part of your upper arm.', image: bicepImg },
-                { key: 'elbow', label: 'Elbow', sub: 'Around elbow', guide: 'Measure around your elbow.', image: wristImg },
-                { key: 'wristCirc', label: 'Wrist Circumference', sub: 'Around wrist', guide: 'Measure around your wrist bone.', image: wristImg },
+                { key: 'elbow', label: 'Elbow', sub: 'Around elbow', guide: 'Measure around your elbow joint (slightly bent).', image: sleeveLengthImg },
+                { key: 'wristCirc', label: 'Wrist Circumference', sub: 'Around wrist', guide: 'Measure around your wrist bone.', image: sleeveLengthImg },
             ]
         }
     ],
     pants: [
         {
-            section: "Body Circumference",
+            section: "Waist & Hips",
             fields: [
-                { key: 'waist', label: 'Waist', sub: 'Natural waistline', guide: 'Measure around your natural waistline.', image: waistImg },
-                { key: 'highHip', label: 'High Hip', sub: 'Hip bone level', guide: 'Measure around your upper hip area.', image: hipImg },
-                { key: 'fullHip', label: 'Full Hip', sub: 'Widest part of buttocks', guide: 'Measure around the fullest part of your hips.', image: hipImg },
+                { key: 'waist', label: 'Waist', sub: 'Natural waistline', guide: 'Measure around your natural waistline.', image: highHipImg },
+                { key: 'highHip', label: 'High Hip', sub: 'Hip bone level', guide: 'Measure around the level of your hip bones.', image: highHipImg },
+                { key: 'fullHip', label: 'Full Hip', sub: 'Widest part', guide: 'Measure around the fullest part of your hips.', image: fullHipImg },
             ]
         },
         {
-            section: "Rise & Balance",
+            section: "Rise & Length",
             fields: [
-                { key: 'crotchDepth', label: 'Crotch Depth (Sitting)', sub: 'Waist to chair', guide: 'Sit on a flat surface and measure from waist to the seat.', image: crotchDepthImg },
-                { key: 'crotchLength', label: 'Crotch Length', sub: 'Front to back', guide: 'Measure from front waist through legs to back waist.', image: crotchLengthImg },
+                { key: 'crotchDepth', label: 'Crotch Depth', sub: 'Waist to chair (sitting)', guide: 'Measure from the waist to the chair surface while sitting.', image: dressLengthImg },
+                { key: 'crotchLength', label: 'Crotch Length', sub: 'Waist (front) to waist (back)', guide: 'Measure from the front waist, under the crotch, to the back waist.', image: dressLengthImg },
+                { key: 'inseam', label: 'Inseam', sub: 'Crotch to ankle', guide: 'Measure from the crotch down the inside of the leg to the ankle.', image: skirtLengthImg },
+                { key: 'outseam', label: 'Outseam', sub: 'Waist to ankle', guide: 'Measure from the waist down the outside of the leg to the ankle.', image: skirtLengthImg },
             ]
         },
         {
-            section: "Lengths",
+            section: "Leg Circumference",
             fields: [
-                { key: 'inseam', label: 'Inseam', sub: 'Crotch to floor', guide: 'Measure from the crotch down to the floor.', image: outseamImg },
-                { key: 'outseam', label: 'Outseam', sub: 'Waist to floor', guide: 'Measure from the waist down to the floor.', image: outseamImg },
-            ]
-        },
-        {
-            section: "Leg Measurements",
-            fields: [
-                { key: 'thigh', label: 'Thigh', sub: 'Widest part of thigh', guide: 'Measure around the fullest part of your thigh.', image: thighImg },
-                { key: 'knee', label: 'Knee', sub: 'Around knee', guide: 'Measure around your knee.', image: kneeImg },
-                { key: 'calf', label: 'Calf', sub: 'Around calf', guide: 'Measure around your calf.', image: calfImg },
-                { key: 'ankleOpening', label: 'Ankle Opening', sub: 'Around ankle', guide: 'Measure around your ankle.', image: ankleImg },
+                { key: 'thigh', label: 'Thigh', sub: 'Widest part', guide: 'Measure around the fullest part of your upper thigh.', image: skirtLengthImg },
+                { key: 'knee', label: 'Knee', sub: 'Around knee', guide: 'Measure around your knee point.', image: skirtLengthImg },
+                { key: 'calf', label: 'Calf', sub: 'Around calf', guide: 'Measure around the fullest part of your calf.', image: skirtLengthImg },
+                { key: 'ankleOpening', label: 'Ankle Opening', sub: 'Desired width', guide: 'Measure around your ankle or the desired width of the leg opening.', image: skirtLengthImg },
             ]
         }
     ],
@@ -166,36 +134,26 @@ export const MEASUREMENT_SCHEMES: Record<string, MeasurementSection[]> = {
         {
             section: "Body Circumference",
             fields: [
-                { key: 'highBust', label: 'High Bust', sub: 'Above the bust', guide: 'Measure around your chest above your bust line.', image: chestFrontImg },
-                { key: 'fullBust', label: 'Full Bust', sub: 'Widest part', guide: 'Measure around the fullest part of your bust.', image: chestFrontImg },
-                { key: 'underBust', label: 'Under-Bust', sub: 'Below the bust', guide: 'Measure around your ribs just under your bust.', image: chestFrontImg },
-                { key: 'waist', label: 'Waist', sub: 'Natural waistline', guide: 'Measure around your natural waistline.', image: waistImg },
+                { key: 'chest', label: 'Chest', sub: 'Fullest part', guide: 'Measure around the fullest part of your chest.', image: chestFrontImg },
+                { key: 'waist', label: 'Waist', sub: 'At navel level', guide: 'Measure around your waist at the level of your navel.', image: highHipImg },
+                { key: 'hips', label: 'Hips', sub: 'Widest part', guide: 'Measure around the fullest part of your hips.', image: fullHipImg },
             ]
         },
         {
-            section: "Length & Balance",
+            section: "Shoulder & Length",
             fields: [
-                { key: 'frontLength', label: 'Front Length', sub: 'Shoulder to waist', guide: 'Measure from shoulder to natural waist.', image: shoulderToBustImg },
-                { key: 'backLength', label: 'Back Length', sub: 'Neck to waist', guide: 'Measure from neck bone to natural waist.', image: chestBackImg },
-                { key: 'jacketLength', label: 'Jacket Length', sub: 'Shoulder to hem', guide: 'Total length of the jacket.', image: shoulderToBustImg },
-            ]
-        },
-        {
-            section: "Shoulder & Armhole",
-            fields: [
-                { key: 'shoulderWidth', label: 'Shoulder Width', sub: 'Seam to seam', guide: 'Measure across the back from shoulder bone to shoulder bone.', image: shoulderWidthImg },
-                { key: 'shoulderSlope', label: 'Shoulder Slope', sub: 'Shoulder angle', guide: 'Measure the angle of your shoulder.', image: shoulderWidthImg },
-                { key: 'neckCirc', label: 'Neck Circumference', sub: 'Around neck', guide: 'Measure around the base of your neck.', image: neckImg },
-                { key: 'armholeDepth', label: 'Armhole Depth', sub: 'Shoulder to underarm', guide: 'Measure vertically from shoulder to underarm.', image: armholeCircImg },
+                { key: 'shoulderWidth', label: 'Shoulder Width', sub: 'Across back', guide: 'Measure across the back from shoulder point to shoulder point.', image: shoulderWidthImg },
+                { key: 'shoulderSlope', label: 'Shoulder Slope', sub: 'Angle', guide: 'Measure the angle of your shoulder from the neck base.', image: genericGuide },
+                { key: 'jacketLength', label: 'Jacket Length', sub: 'Shoulder to desired hem', guide: 'Measure from the shoulder point down to the desired jacket length.', image: frontLengthImg },
+                { key: 'backLength', label: 'Back Length', sub: 'Neck to waist', guide: 'Measure from the base of the neck to the waistline.', image: backLengthImg },
             ]
         },
         {
             section: "Sleeves",
             fields: [
-                { key: 'sleeveLength', label: 'Sleeve Length', sub: 'Shoulder to wrist', guide: 'Measure from shoulder tip to wrist.', image: sleeveLengthImg },
-                { key: 'upperArm', label: 'Upper Arm', sub: 'Widest part', guide: 'Measure around the fullest part of your upper arm.', image: bicepImg },
-                { key: 'elbow', label: 'Elbow', sub: 'Around elbow', guide: 'Measure around your elbow.', image: wristImg },
-                { key: 'wrist', label: 'Wrist', sub: 'Around wrist', guide: 'Measure around your wrist.', image: wristImg },
+                { key: 'sleeveLength', label: 'Sleeve Length', sub: 'Shoulder to wrist', guide: 'Measure from shoulder point to the wrist bone.', image: sleeveLengthImg },
+                { key: 'bicep', label: 'Bicep', sub: 'Around upper arm', guide: 'Measure around the fullest part of your bicep.', image: bicepImg },
+                { key: 'wrist', label: 'Wrist', sub: 'Around wrist', guide: 'Measure around your wrist bone.', image: sleeveLengthImg },
             ]
         }
     ]

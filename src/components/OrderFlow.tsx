@@ -64,7 +64,11 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
         return {
             orderType: 'dress',
             occasion: 'wedding',
-            measurements: {}
+            measurements: {},
+            agreedToTerms: false,
+            fullName: '',
+            phoneNumber: '',
+            city: ''
         }
     });
 
@@ -135,7 +139,11 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
     };
 
     const updateFormData = (data: Partial<OrderFormState>) => {
-        setFormData(prev => ({ ...prev, ...data }));
+        setFormData(prev => ({
+            ...prev,
+            ...data,
+            measurements: { ...(prev.measurements || {}), ...(data.measurements || {}) }
+        }));
     };
 
     const [showSuccess, setShowSuccess] = useState(false);
@@ -305,7 +313,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
             <div className="flex flex-col items-center justify-center gap-12 py-12">
                 <div className="text-center flex flex-col gap-4 px-6 md:px-0">
                     <span className="text-primary text-[10px] font-bold uppercase tracking-[0.3em]">Welcome Back</span>
-                    <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight px-4 md:px-0">Nice to see you again, {returningProfile.fullName.split(' ')[0]}</h1>
+                    <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight px-4 md:px-0">Nice to see you again, {returningProfile.fullName?.split(' ')[0] || 'there'}</h1>
                     <p className="text-white/40 text-sm md:text-lg font-light max-w-md mx-auto">We've loaded your profile details to save you time. Would you like to use them for this order?</p>
                 </div>
 
@@ -338,7 +346,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                         onClick={onNext}
                         className="bg-primary text-white py-4 px-12 rounded-xl text-sm font-bold tracking-[0.1em] hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 w-full"
                     >
-                        CONTINUE AS {returningProfile.fullName.split(' ')[0].toUpperCase()}
+                        CONTINUE AS {(returningProfile.fullName?.split(' ')[0] || 'User').toUpperCase()}
                     </button>
                     <button
                         onClick={() => setUseReturnedProfile(false)}
@@ -754,10 +762,11 @@ const MeasurementStep = ({ data, update, onNext, onBack }: any) => {
     const selectedFieldData = allFields.find(f => f.key === selectedField);
 
     const handleUpdate = (key: string, val: string) => {
+        const floatVal = parseFloat(val);
         update({
             measurements: {
-                ...data.measurements,
-                [key]: parseFloat(val) || 0
+                ...(data.measurements || {}),
+                [key]: isNaN(floatVal) ? 0 : floatVal
             }
         });
     };
