@@ -9,6 +9,8 @@ import { Collections } from './components/Collections';
 function App() {
   const [currentView, setCurrentView] = useState<'home' | 'order-flow' | 'my-orders' | 'order-details' | 'collections' | 'admin'>('home');
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null);
+  const [selectedCollectionId, setSelectedCollectionId] = useState<string | null>(null);
+  const [editingOrder, setEditingOrder] = useState<any | null>(null);
 
   useEffect(() => {
     document.documentElement.classList.add('dark');
@@ -36,13 +38,20 @@ function App() {
     if (view === 'home') setCurrentView('home');
   }, []);
 
-  const handleStartOrder = () => setCurrentView('order-flow');
+  const handleStartOrder = (collectionId?: string) => {
+    setSelectedCollectionId(collectionId || null);
+    setCurrentView('order-flow');
+  };
   const handleGoHome = () => setCurrentView('home');
   const handleGoToMyOrders = () => setCurrentView('my-orders');
   const handleGoToCollections = () => setCurrentView('collections');
   const handleViewOrderDetails = (id: string) => {
     setSelectedOrderId(id);
     setCurrentView('order-details');
+  };
+  const handleEditOrder = (order: any) => {
+    setEditingOrder(order);
+    setCurrentView('order-flow');
   };
 
   return (
@@ -65,7 +74,15 @@ function App() {
         <main className="w-full flex flex-col items-center">
           {currentView === 'order-flow' ? (
             <div className="w-full bg-slate-900 dark:bg-background-dark py-10">
-              <OrderFlow onBack={handleGoHome} />
+              <OrderFlow
+                onBack={() => {
+                  setSelectedCollectionId(null);
+                  setEditingOrder(null);
+                  handleGoHome();
+                }}
+                collectionId={selectedCollectionId}
+                editOrder={editingOrder}
+              />
             </div>
           ) : currentView === 'my-orders' ? (
             <div className="w-full bg-background-light dark:bg-background-dark min-h-[80vh]">
@@ -73,7 +90,11 @@ function App() {
             </div>
           ) : currentView === 'order-details' ? (
             <div className="w-full bg-background-light dark:bg-background-dark min-h-[80vh]">
-              <OrderDetails orderId={selectedOrderId || ''} onBack={handleGoToMyOrders} />
+              <OrderDetails
+                orderId={selectedOrderId || ''}
+                onBack={handleGoToMyOrders}
+                onEdit={handleEditOrder}
+              />
             </div>
           ) : currentView === 'collections' ? (
             <div className="w-full bg-background-light dark:bg-background-dark min-h-[80vh]">

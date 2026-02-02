@@ -6,7 +6,7 @@ import { collectionService } from '../services/api';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-export const Collections = ({ onStartOrder }: { onStartOrder: () => void }) => {
+export const Collections = ({ onStartOrder }: { onStartOrder: (collectionId?: string) => void }) => {
     const [collections, setCollections] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [activeTag, setActiveTag] = useState('All');
@@ -121,7 +121,7 @@ export const Collections = ({ onStartOrder }: { onStartOrder: () => void }) => {
 
                                         <div className="flex items-center gap-4 pt-4">
                                             <button
-                                                onClick={onStartOrder}
+                                                onClick={() => onStartOrder(item._id)}
                                                 className="flex-1 bg-white text-black py-4 px-6 md:px-8 rounded-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest hover:bg-accent-gold hover:text-white transition-all flex items-center justify-center gap-3"
                                             >
                                                 <ShoppingBag className="size-4" />
@@ -149,7 +149,7 @@ export const Collections = ({ onStartOrder }: { onStartOrder: () => void }) => {
                             While our collections showcase our vision, we thrive on creating entirely new silhouettes specifically for you.
                         </p>
                         <button
-                            onClick={onStartOrder}
+                            onClick={() => onStartOrder()}
                             className="bg-primary text-white py-5 px-10 md:px-12 rounded-full text-xs md:text-sm font-bold uppercase tracking-[0.2em] hover:bg-primary/90 transition-all shadow-2xl shadow-primary/20 flex items-center gap-4"
                         >
                             Begin Bespoke Journey

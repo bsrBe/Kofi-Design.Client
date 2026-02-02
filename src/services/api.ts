@@ -83,6 +83,32 @@ export const orderService = {
   getOrderById: async (id: string) => {
     const response = await api.get(`/orders/${id}`);
     return response.data;
+  },
+  
+  updateOrder: async (orderId: string, data: CreateOrderPayload, photo?: File) => {
+    const formData = new FormData();
+    formData.append('fullName', data.fullName);
+    formData.append('phoneNumber', data.phoneNumber);
+    formData.append('city', data.city);
+    formData.append('instagramHandle', data.instagramHandle || '');
+    formData.append('measurements', JSON.stringify(data.measurements));
+    
+    formData.append('orderType', data.orderType);
+    formData.append('occasion', data.occasion);
+    formData.append('fabricPreference', data.fabricPreference);
+    formData.append('eventDate', data.eventDate);
+    formData.append('preferredDeliveryDate', data.preferredDeliveryDate);
+    formData.append('bodyConcerns', data.bodyConcerns);
+    formData.append('colorPreference', data.colorPreference);
+    formData.append('termsAccepted', String(data.termsAccepted));
+    formData.append('revisionPolicyAccepted', String(data.revisionPolicyAccepted));
+
+    if (photo) {
+      formData.append('inspirationPhoto', photo);
+    }
+
+    const response = await api.patch(`/orders/${orderId}`, formData);
+    return response.data;
   }
 };
 

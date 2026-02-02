@@ -45,7 +45,7 @@ export const Navbar = ({ onStartOrder, onHome, onMyOrders, onCollections, curren
                     <div className="size-6 md:size-8 text-accent-gold flex-shrink-0">
                         <Logo className="w-full h-full" />
                     </div>
-                    <h2 className="text-slate-900 dark:text-white text-base md:text-xl font-bold tracking-tight uppercase whitespace-nowrap">Kofi's Design</h2>
+                    <h2 className="text-slate-900 dark:text-white text-base md:text-xl font-bold tracking-tight uppercase whitespace-nowrap">Keni's Design</h2>
                 </div>
 
                 {/* Desktop Nav */}
@@ -130,7 +130,7 @@ export const Navbar = ({ onStartOrder, onHome, onMyOrders, onCollections, curren
                 <div className="absolute top-6 left-6" onClick={() => setIsMenuOpen(false)}>
                     <div className="flex items-center gap-3 text-accent-gold">
                         <Logo className="size-5" />
-                        <h2 className="text-white text-sm font-bold tracking-widest uppercase">Kofi's Design</h2>
+                        <h2 className="text-white text-sm font-bold tracking-widest uppercase">Keni's Design</h2>
                     </div>
                 </div>
             </div>
@@ -145,7 +145,7 @@ export const Footer = () => {
                 <div className="flex flex-col items-center md:items-start gap-4">
                     <div className="flex items-center gap-3 text-accent-gold">
                         <Logo className="size-5" />
-                        <h2 className="text-slate-900 dark:text-white text-lg font-bold tracking-widest uppercase">Kofi's Design</h2>
+                        <h2 className="text-slate-900 dark:text-white text-lg font-bold tracking-widest uppercase">Keni's Design</h2>
                     </div>
                     <p className="text-slate-500 dark:text-white/40 text-sm max-w-xs text-center md:text-left">
                         Refining the art of bespoke tailoring for the modern woman.
@@ -159,7 +159,7 @@ export const Footer = () => {
                 </div>
 
                 <div className="text-center text-slate-300 dark:text-white/20 text-[10px] uppercase tracking-widest font-bold">
-                    © 2026 Kofi's Design Atelier. All Rights Reserved.
+                    © 2026 Keni's Design Atelier. All Rights Reserved.
                 </div>
             </div>
         </footer>

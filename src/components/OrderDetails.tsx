@@ -6,11 +6,12 @@ import { orderService } from '../services/api';
 interface OrderDetailsProps {
     orderId: string;
     onBack: () => void;
+    onEdit?: (order: any) => void;
 }
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-export const OrderDetails = ({ orderId, onBack }: OrderDetailsProps) => {
+export const OrderDetails = ({ orderId, onBack, onEdit }: OrderDetailsProps) => {
     const [order, setOrder] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
@@ -136,6 +137,15 @@ export const OrderDetails = ({ orderId, onBack }: OrderDetailsProps) => {
                                 Pay Deposit
                             </button>
                         )}
+                        {order.status === 'form_submitted' && onEdit && (
+                            <button
+                                onClick={() => onEdit(order)}
+                                className="flex-1 md:flex-none py-4 px-8 bg-white/5 border border-white/10 rounded-xl text-white font-bold text-sm flex items-center justify-center gap-3 hover:bg-white/10 transition-all uppercase tracking-widest"
+                            >
+                                <span className="material-symbols-outlined !text-xl">edit</span>
+                                Edit Your Order
+                            </button>
+                        )}
                     </div>
                 </header>
 
@@ -217,9 +227,11 @@ export const OrderDetails = ({ orderId, onBack }: OrderDetailsProps) => {
                                         <span className="text-white/20 text-[10px] font-bold uppercase tracking-widest">Measurement Profile (Captured)</span>
                                         <div className="grid grid-cols-2 gap-2">
                                             {order.measurements && Object.entries(order.measurements).map(([key, val]: any) => (
-                                                <div key={key} className="bg-white/5 border border-white/10 rounded-xl p-3 flex justify-between items-center">
-                                                    <span className="text-white/20 text-[8px] font-bold uppercase tracking-widest">{key}</span>
-                                                    <span className="text-white font-bold text-xs">{val}</span>
+                                                <div key={key} className="bg-white/5 border border-white/10 rounded-xl p-3 flex justify-between items-center gap-4">
+                                                    <span className="text-white/20 text-[8px] font-bold uppercase tracking-widest leading-tight">
+                                                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                                                    </span>
+                                                    <span className="text-white font-bold text-xs shrink-0">{val} cm</span>
                                                 </div>
                                             ))}
                                         </div>

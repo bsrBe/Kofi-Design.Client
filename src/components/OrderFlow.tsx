@@ -3,45 +3,56 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { orderService } from '../services/api';
-import bustGuide from '../assets/bust-guide.png';
-import waistGuide from '../assets/waist-guide.png';
-import hipsGuide from '../assets/hips-guide.png';
-import shoulderGuide from '../assets/shoulder-guide.png';
-import dressLengthGuide from '../assets/dress-length-guide.png';
-import armLengthGuide from '../assets/arm-length-guide.png';
-import heightGuide from '../assets/height-guide.png';
+import { MEASUREMENT_SCHEMES } from '../constants/measurements';
 
 interface OrderFormState {
     fullName: string;
     phoneNumber: string;
     city: string;
     instagramHandle?: string;
-    orderType: 'custom_event_dress' | 'signature_dress';
+    orderType: 'custom_event_dress' | 'signature_dress' | 'top' | 'dress' | 'pants' | 'jacket';
     occasion: 'wedding' | 'party' | 'graduation' | 'other';
     fabricPreference: string;
     eventDate: string;
     preferredDeliveryDate: string;
-    measurements: {
-        bust: number;
-        waist: number;
-        hips: number;
-        shoulderWidth: number;
-        dressLength: number;
-        armLength: number;
-        height: number;
-    };
+    measurements: Record<string, number>;
     bodyConcerns: string;
     colorPreference: string;
     termsAccepted: boolean;
     revisionPolicyAccepted: boolean;
     agreedToTerms: boolean;
+    collectionId?: string | null;
 }
 
-export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
+interface OrderFlowProps {
+    onBack: () => void;
+    collectionId?: string | null;
+    editOrder?: any | null;
+}
+
+export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) => {
     const [step, setStep] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [inspirationPhoto, setInspirationPhoto] = useState<File | null>(null);
     const [formData, setFormData] = useState<Partial<OrderFormState>>(() => {
+        if (editOrder) {
+            return {
+                fullName: editOrder.clientProfile?.fullName || '',
+                phoneNumber: editOrder.clientProfile?.phoneNumber || '',
+                city: editOrder.clientProfile?.city || '',
+                instagramHandle: editOrder.clientProfile?.instagramHandle || '',
+                orderType: editOrder.orderType,
+                occasion: editOrder.occasion,
+                fabricPreference: editOrder.fabricPreference,
+                eventDate: editOrder.eventDate ? new Date(editOrder.eventDate).toISOString().split('T')[0] : '',
+                preferredDeliveryDate: editOrder.preferredDeliveryDate ? new Date(editOrder.preferredDeliveryDate).toISOString().split('T')[0] : '',
+                measurements: editOrder.measurements,
+                bodyConcerns: editOrder.bodyConcerns,
+                colorPreference: editOrder.colorPreference,
+                agreedToTerms: true,
+                collectionId: editOrder.collectionId?._id || editOrder.collectionId
+            };
+        }
         const saved = localStorage.getItem('kofi_order_form');
         if (saved) {
             try {
@@ -51,19 +62,24 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
             }
         }
         return {
-            orderType: 'custom_event_dress',
+            orderType: 'dress',
             occasion: 'wedding',
-            measurements: {
-                bust: 0,
-                waist: 0,
-                hips: 0,
-                shoulderWidth: 0,
-                dressLength: 0,
-                armLength: 0,
-                height: 0,
-            }
-        };
+            measurements: {}
+        }
     });
+
+    useEffect(() => {
+        if (collectionId) {
+            updateFormData({
+                collectionId,
+                orderType: 'signature_dress' // Default to signature for collections
+            });
+        }
+        if (editOrder) {
+            // Start at details step if editing, unless it's a collection order
+            setStep(editOrder.collectionId ? 3 : 2);
+        }
+    }, [collectionId, editOrder]);
 
 
     const [returningProfile, setReturningProfile] = useState<any>(null); // Store fetched profile
@@ -81,8 +97,13 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
                     setUseReturnedProfile(true);
                     updateFormData(data.profile);
 
-                    // Auto-skip to Step 2 if we're on Step 1
-                    setStep(current => current === 1 ? 2 : current);
+                    // Auto-skip logic
+                    setStep(current => {
+                        if (current === 1) {
+                            return collectionId ? 3 : 2;
+                        }
+                        return current;
+                    });
                 }
             } catch (error) {
                 console.error("Failed to fetch profile", error);
@@ -96,10 +117,18 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
     }, [formData]);
 
 
-    const nextStep = () => setStep(s => Math.min(s + 1, 6));
+    const nextStep = () => {
+        if (step === 1 && collectionId) {
+            setStep(3); // Skip Step 2 for collection orders
+        } else {
+            setStep(s => Math.min(s + 1, 6));
+        }
+    };
     const prevStep = () => {
         if (step === 1) {
             onBack();
+        } else if (step === 3 && collectionId) {
+            setStep(1); // Skip Step 2 going back
         } else {
             setStep(s => Math.max(s - 1, 1));
         }
@@ -131,10 +160,16 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
                 bodyConcerns: formData.bodyConcerns || '',
                 colorPreference: formData.colorPreference || '',
                 termsAccepted: formData.agreedToTerms || false,
-                revisionPolicyAccepted: formData.agreedToTerms || false, // Use terms as proxy for simplicity in prototype
+                revisionPolicyAccepted: formData.agreedToTerms || false,
+                collectionId: collectionId || formData.collectionId,
             };
 
-            await orderService.createOrder(payload as any, inspirationPhoto || undefined);
+            if (editOrder) {
+                await orderService.updateOrder(editOrder._id, payload as any, inspirationPhoto || undefined);
+            } else {
+                await orderService.createOrder(payload as any, inspirationPhoto || undefined);
+            }
+
             localStorage.removeItem('kofi_order_form');
             setShowSuccess(true);
         } catch (error: any) {
@@ -209,6 +244,7 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
                             onSubmit={handleSubmit}
                             onBack={prevStep}
                             error={submissionError}
+                            editOrder={editOrder}
                         />
                     )}
                 </motion.div>
@@ -236,9 +272,13 @@ export const OrderFlow = ({ onBack }: { onBack: () => void }) => {
                                 </div>
 
                                 <div className="flex flex-col gap-3">
-                                    <h2 className="text-white text-4xl font-bold tracking-tight">Masterpiece Initiated</h2>
+                                    <h2 className="text-white text-4xl font-bold tracking-tight">
+                                        {editOrder ? 'Order Updated' : 'Masterpiece Initiated'}
+                                    </h2>
                                     <p className="text-white/40 text-lg font-light leading-relaxed">
-                                        Your order has been successfully submitted. Our artisans will review your request and contact you shortly.
+                                        {editOrder
+                                            ? 'Your changes have been saved successfully. Our team will review the updated details.'
+                                            : 'Your order has been successfully submitted. Our artisans will review your request and contact you shortly.'}
                                     </p>
                                 </div>
 
@@ -317,7 +357,7 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                         <div className="flex flex-col gap-2">
-                            <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">Kofi's Design Portal</span>
+                            <span className="text-primary text-[10px] font-bold uppercase tracking-[0.2em]">Keni's Design Portal</span>
                             <h1 className="text-white text-3xl md:text-5xl font-bold tracking-tight">Step 1: Client Profile</h1>
                         </div>
                         <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-1">
@@ -426,8 +466,10 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
 
 const DesignStep = ({ data, update, onNext, onBack }: any) => {
     const types = [
-        { id: 'custom_event_dress', title: 'Custom Event Dress', desc: 'Unique, one-of-a-kind creations for your most important moments.', icon: 'auto_awesome', color: 'primary' },
-        { id: 'signature_dress', title: 'Signature Collection', desc: 'Bespoke adaptations from our renowned heritage designs.', icon: 'star', color: 'secondary-cyan' },
+        { id: 'dress', title: 'Dress', desc: 'Traditional & Modern Bespoke Gowns.', icon: 'checkroom', color: 'primary' },
+        { id: 'top', title: 'Top', desc: 'Chic Blouses, Corsets & Casual Tops.', icon: 'apparel', color: 'secondary-cyan' },
+        { id: 'pants', title: 'Pants', desc: 'Tailored Trousers & Modern Slacks.', icon: 'theater_comedy', color: 'primary' },
+        { id: 'jacket', title: 'Jacket', desc: 'Premium Blazers & Structured Outerwear.', icon: 'layers', color: 'secondary-cyan' },
     ];
 
     const occasions = [
@@ -704,16 +746,12 @@ const TimelineStep = ({ data, update, onNext, onBack }: any) => {
 
 const MeasurementStep = ({ data, update, onNext, onBack }: any) => {
     const [selectedField, setSelectedField] = useState<string | null>(null);
+    const orderType = (data.orderType as string) || 'dress';
+    const sections = MEASUREMENT_SCHEMES[orderType] || MEASUREMENT_SCHEMES.dress;
 
-    const fields = [
-        { key: 'bust', label: 'Bust', sub: 'Widest part of the chest', guide: 'Wrap the tape level around the fullest part of your bust. Keep it snug but not tight.', image: bustGuide },
-        { key: 'waist', label: 'Waist', sub: 'Natural waistline narrowest point', guide: 'Measure around your natural waistline, which is the narrowest part of your torso.', image: waistGuide },
-        { key: 'hips', label: 'Hips', sub: 'Widest part around buttocks', guide: 'Stand with your heels together and measure around the fullest part of your hips.', image: hipsGuide },
-        { key: 'shoulderWidth', label: 'Shoulder', sub: 'Seam to seam', guide: 'Measure across the back from the edge of one shoulder bone to the other.', image: shoulderGuide },
-        { key: 'dressLength', label: 'Dress Length', sub: 'Shoulder to hemline', guide: 'Measure from the highest point of your shoulder down to where you want the hem to end.', image: dressLengthGuide },
-        { key: 'armLength', label: 'Arm Length', sub: 'Shoulder tip to wrist', guide: 'Measure from the top of the shoulder bone down to the wrist bone.', image: armLengthGuide },
-        { key: 'height', label: 'Total Height', sub: 'Calculated with heels', guide: 'Stand straight against a wall with heels together. Measure from the top of your head to the floor. Mention whether this is with or without heels in the notes.', image: heightGuide },
-    ];
+    // Flatten all fields for easier lookup in the guide
+    const allFields = sections.flatMap(s => s.fields);
+    const selectedFieldData = allFields.find(f => f.key === selectedField);
 
     const handleUpdate = (key: string, val: string) => {
         update({
@@ -743,58 +781,63 @@ const MeasurementStep = ({ data, update, onNext, onBack }: any) => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                    {fields.map((f) => (
-                        <div key={f.key} className="flex flex-col gap-4">
-                            <div
-                                onClick={() => setSelectedField(f.key)}
-                                className={cn(
-                                    "bg-[#1c1c1c] border p-6 md:p-8 rounded-2xl transition-all group relative cursor-pointer",
-                                    selectedField === f.key ? "border-primary/50 bg-[#222222]" : "border-white/5 hover:border-primary/30"
-                                )}
-                            >
-                                <div className="flex justify-between items-start mb-4 md:mb-6">
-                                    <div className="flex flex-col gap-1 md:gap-2">
-                                        <h3 className="font-bold text-lg md:text-xl text-white tracking-tight">{f.label}</h3>
-                                        <p className="text-[10px] md:text-xs text-white/30 font-light">{f.sub}</p>
-                                    </div>
-                                </div>
-                                <div className="relative">
-                                    <input
-                                        type="number"
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl py-3 md:py-4 px-5 md:px-6 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-xl md:text-2xl font-bold text-white placeholder:text-white/5"
-                                        placeholder="0.0"
-                                        value={data.measurements?.[f.key] || ''}
-                                        onChange={(e) => handleUpdate(f.key, e.target.value)}
-                                        onFocus={() => setSelectedField(f.key)}
-                                    />
-                                    <span className="absolute right-6 top-1/2 -translate-y-1/2 text-xs md:text-sm font-bold text-white/20 uppercase tracking-widest">cm</span>
-                                </div>
-                            </div>
-
-                            <AnimatePresence>
-                                {selectedField === f.key && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        className="lg:hidden overflow-hidden"
-                                    >
-                                        <div className="p-6 bg-white/5 rounded-2xl border border-white/5 flex flex-col gap-4">
-                                            <div className="h-40 flex items-center justify-center bg-black/20 rounded-xl">
-                                                <img
-                                                    src={f.image}
-                                                    alt={f.label}
-                                                    className="h-full w-auto object-contain opacity-80"
-                                                />
+                <div className="flex flex-col gap-16">
+                    {sections.map((section, sIdx) => (
+                        <div key={sIdx} className="flex flex-col gap-8">
+                            <h3 className="text-primary text-[10px] font-bold uppercase tracking-[0.3em] pl-2 border-l-2 border-primary/30">{section.section}</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                                {section.fields.map((f) => (
+                                    <div key={f.key} className="flex flex-col gap-4">
+                                        <div
+                                            onClick={() => setSelectedField(f.key)}
+                                            className={cn(
+                                                "bg-[#1c1c1c] border p-6 md:p-8 rounded-2xl transition-all group relative cursor-pointer",
+                                                selectedField === f.key ? "border-primary/50 bg-[#222222]" : "border-white/5 hover:border-primary/30"
+                                            )}
+                                        >
+                                            <div className="flex justify-between items-start mb-4 md:mb-6">
+                                                <div className="flex flex-col gap-1 md:gap-2">
+                                                    <h3 className="font-bold text-lg md:text-xl text-white tracking-tight">{f.label}</h3>
+                                                    <p className="text-[10px] md:text-xs text-white/30 font-light">{f.sub}</p>
+                                                </div>
                                             </div>
-                                            <p className="text-white/40 text-[10px] leading-relaxed text-center font-medium">
-                                                {f.guide}
-                                            </p>
+                                            <div className="relative">
+                                                <input
+                                                    type="number"
+                                                    className="w-full bg-black/40 border border-white/10 rounded-xl py-3 md:py-4 px-5 md:px-6 focus:ring-1 focus:ring-primary/20 focus:border-primary/50 outline-none transition-all text-xl md:text-2xl font-bold text-white placeholder:text-white/5"
+                                                    placeholder="0.0"
+                                                    value={data.measurements?.[f.key] || ''}
+                                                    onChange={(e) => handleUpdate(f.key, e.target.value)}
+                                                    onFocus={() => setSelectedField(f.key)}
+                                                />
+                                                <span className="absolute right-6 top-1/2 -translate-y-1/2 text-xs md:text-sm font-bold text-white/20 uppercase tracking-widest">cm</span>
+                                            </div>
                                         </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+
+                                        <AnimatePresence>
+                                            {selectedField === f.key && (
+                                                <motion.div
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: 'auto', opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    className="lg:hidden overflow-hidden"
+                                                >
+                                                    <div className="p-6 bg-white/5 rounded-2xl border border-white/5 flex flex-col gap-4">
+                                                        <div className="h-40 flex items-center justify-center bg-black/20 rounded-xl">
+                                                            <img
+                                                                src={f.image}
+                                                                alt={f.label}
+                                                                className="h-full w-auto object-contain opacity-80"
+                                                            />
+                                                        </div>
+                                                        <p className="text-white/40 text-[10px] leading-relaxed italic">{f.guide}</p>
+                                                    </div>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -817,10 +860,10 @@ const MeasurementStep = ({ data, update, onNext, onBack }: any) => {
                 <div className="bg-[#1c1c1c] border border-white/5 rounded-3xl p-8 md:p-10 flex flex-col gap-6 sticky top-24">
                     <h2 className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.3em]">Measurement Guide</h2>
                     <div className="p-4 bg-white/5 rounded-2xl border border-white/5 min-h-[250px] md:min-h-[300px] flex items-center justify-center">
-                        {selectedField && fields.find(f => f.key === selectedField)?.image ? (
+                        {selectedFieldData?.image ? (
                             <img
-                                src={fields.find(f => f.key === selectedField)?.image}
-                                alt={`${fields.find(f => f.key === selectedField)?.label} measurement guide`}
+                                src={selectedFieldData.image}
+                                alt={`${selectedFieldData.label} measurement guide`}
                                 className="w-full h-auto rounded-lg opacity-90 transition-all duration-300 max-w-[200px] md:max-w-none"
                             />
                         ) : (
@@ -832,15 +875,15 @@ const MeasurementStep = ({ data, update, onNext, onBack }: any) => {
                     </div>
                     <div className="p-4 bg-white/5 rounded-2xl">
                         <h4 className="text-white font-bold text-base md:text-lg mb-2 text-center md:text-left">
-                            {selectedField ? fields.find(f => f.key === selectedField)?.label : 'Instructions'}
+                            {selectedFieldData ? selectedFieldData.label : 'Instructions'}
                         </h4>
                         <p className="text-white/40 text-[10px] md:text-sm leading-relaxed text-center md:text-left">
-                            {selectedField ? fields.find(f => f.key === selectedField)?.guide : 'Tap or click on any measurement field to see specific instructions and visual guides for accurate measurements.'}
+                            {selectedFieldData ? selectedFieldData.guide : 'Tap or click on any measurement field to see specific instructions and visual guides for accurate measurements.'}
                         </p>
                     </div>
                 </div>
             </aside>
-        </div >
+        </div>
     );
 };
 
@@ -918,7 +961,7 @@ const ReviewItem = ({ label, value }: { label: string; value: string | number | 
     </div>
 );
 
-const ReviewStep = ({ data, isSubmitting, onSubmit, onBack, error, update }: any) => {
+const ReviewStep = ({ data, isSubmitting, onSubmit, onBack, error, update, editOrder }: any) => {
     return (
         <div className="flex flex-col gap-16 pb-20">
             <div className="flex flex-col gap-4">
@@ -990,7 +1033,7 @@ const ReviewStep = ({ data, isSubmitting, onSubmit, onBack, error, update }: any
                             Finalizing...
                         </>
                     ) : (
-                        'Submit Bespoke Order'
+                        editOrder ? 'Save Changes' : 'Submit Bespoke Order'
                     )}
                 </button>
             </div>
