@@ -107,6 +107,26 @@ export const MEASUREMENT_SCHEMES: Record<string, MeasurementSection[]> = {
                 { key: 'waistToFloor', label: 'Waist to Floor', sub: 'Waist to floor', guide: 'Measure from waist down to the floor.', image: waistToFloorImg },
                 { key: 'fullDressLength', label: 'Full Dress Length', sub: 'Shoulder to floor', guide: 'Total length from shoulder to floor.', image: waistToFloorImg },
             ]
+        },
+        {
+            section: "Shoulder, Neck & Armhole",
+            fields: [
+                { key: 'shoulderWidth', label: 'Shoulder Width', sub: 'Seam to seam', guide: 'Measure across the back from shoulder bone to shoulder bone.', image: shoulderWidthImg },
+                { key: 'neckCirc', label: 'Neck Circumference', sub: 'Around neck', guide: 'Measure around the base of your neck.', image: neckImg },
+                { key: 'neckWidth', label: 'Neck Width', sub: 'Width of neck opening', guide: 'Measure the width of the neck opening from side to side.', image: neckOpenImg },
+                { key: 'neckDepthFront', label: 'Neck Depth (Front)', sub: 'Front neck drop', guide: 'Measure from neck base to the center front depth.', image: neckOpenImg },
+                { key: 'armholeDepth', label: 'Armhole Depth', sub: 'Shoulder to underarm', guide: 'Measure vertically from shoulder to underarm.', image: armholeCircImg },
+                { key: 'armholeCirc', label: 'Armhole Circumference', sub: 'Around armhole', guide: 'Measure around the shoulder and underarm.', image: armholeCircImg },
+            ]
+        },
+        {
+            section: "Sleeves (Optional)",
+            fields: [
+                { key: 'sleeveLength', label: 'Sleeve Length', sub: 'Shoulder to wrist', guide: 'Measure from shoulder tip to wrist.', image: sleeveLengthImg },
+                { key: 'upperArm', label: 'Upper Arm (Bicep)', sub: 'Widest part of arm', guide: 'Measure around the fullest part of your upper arm.', image: bicepImg },
+                { key: 'elbow', label: 'Elbow', sub: 'Around elbow', guide: 'Measure around your elbow.', image: wristImg },
+                { key: 'wristCirc', label: 'Wrist Circumference', sub: 'Around wrist', guide: 'Measure around your wrist bone.', image: wristImg },
+            ]
         }
     ],
     pants: [
