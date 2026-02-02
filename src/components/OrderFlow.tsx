@@ -35,8 +35,23 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [inspirationPhoto, setInspirationPhoto] = useState<File | null>(null);
     const [formData, setFormData] = useState<Partial<OrderFormState>>(() => {
+        const defaults: Partial<OrderFormState> = {
+            orderType: 'dress',
+            occasion: 'wedding',
+            measurements: {},
+            agreedToTerms: false,
+            fullName: '',
+            phoneNumber: '',
+            city: '',
+            fabricPreference: '',
+            bodyConcerns: '',
+            colorPreference: '',
+            instagramHandle: ''
+        };
+
         if (editOrder) {
             return {
+                ...defaults,
                 fullName: editOrder.clientProfile?.fullName || '',
                 phoneNumber: editOrder.clientProfile?.phoneNumber || '',
                 city: editOrder.clientProfile?.city || '',
@@ -46,7 +61,7 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
                 fabricPreference: editOrder.fabricPreference,
                 eventDate: editOrder.eventDate ? new Date(editOrder.eventDate).toISOString().split('T')[0] : '',
                 preferredDeliveryDate: editOrder.preferredDeliveryDate ? new Date(editOrder.preferredDeliveryDate).toISOString().split('T')[0] : '',
-                measurements: editOrder.measurements,
+                measurements: editOrder.measurements || {},
                 bodyConcerns: editOrder.bodyConcerns,
                 colorPreference: editOrder.colorPreference,
                 agreedToTerms: true,
@@ -56,20 +71,13 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
         const saved = localStorage.getItem('kofi_order_form');
         if (saved) {
             try {
-                return JSON.parse(saved);
+                const parsed = JSON.parse(saved);
+                return { ...defaults, ...parsed, measurements: parsed.measurements || {} };
             } catch (e) {
                 console.error('Failed to parse saved form data', e);
             }
         }
-        return {
-            orderType: 'dress',
-            occasion: 'wedding',
-            measurements: {},
-            agreedToTerms: false,
-            fullName: '',
-            phoneNumber: '',
-            city: ''
-        }
+        return defaults;
     });
 
     useEffect(() => {
@@ -99,7 +107,12 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
                 if (data && data.profile) {
                     setReturningProfile(data.profile);
                     setUseReturnedProfile(true);
-                    updateFormData(data.profile);
+
+                    // Only update if we don't already have unsaved work
+                    const saved = localStorage.getItem('kofi_order_form');
+                    if (!saved) {
+                        updateFormData(data.profile);
+                    }
 
                     // Auto-skip logic
                     setStep(current => {
@@ -139,11 +152,31 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
     };
 
     const updateFormData = (data: Partial<OrderFormState>) => {
+        if (!data) return;
         setFormData(prev => ({
             ...prev,
             ...data,
             measurements: { ...(prev.measurements || {}), ...(data.measurements || {}) }
         }));
+    };
+
+    const handleClearForm = () => {
+        localStorage.removeItem('kofi_order_form');
+        setFormData({
+            orderType: 'dress',
+            occasion: 'wedding',
+            measurements: {},
+            agreedToTerms: false,
+            fullName: '',
+            phoneNumber: '',
+            city: '',
+            fabricPreference: '',
+            bodyConcerns: '',
+            colorPreference: '',
+            instagramHandle: ''
+        });
+        setUseReturnedProfile(false);
+        setStep(1);
     };
 
     const [showSuccess, setShowSuccess] = useState(false);
@@ -208,6 +241,7 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
                             returningProfile={returningProfile}
                             useReturnedProfile={useReturnedProfile}
                             setUseReturnedProfile={setUseReturnedProfile}
+                            onClear={handleClearForm}
                         />
                     )}
                     {step === 2 && (
@@ -306,7 +340,7 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
     );
 };
 
-const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturnedProfile, setUseReturnedProfile }: any) => {
+const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturnedProfile, setUseReturnedProfile, onClear }: any) => {
 
     if (useReturnedProfile && returningProfile) {
         return (
@@ -320,17 +354,17 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                 <div className="bg-[#1c1c1c] border border-white/5 rounded-3xl md:rounded-[2.5rem] p-6 md:p-10 w-full max-w-md flex flex-col gap-6">
                     <div className="flex items-center gap-4 border-b border-white/5 pb-6">
                         <div className="size-12 md:size-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl md:text-2xl font-bold">
-                            {returningProfile.fullName.charAt(0)}
+                            {(returningProfile.fullName || 'U').charAt(0)}
                         </div>
                         <div className="flex flex-col">
-                            <h3 className="text-white font-bold text-base md:text-lg">{returningProfile.fullName}</h3>
-                            <p className="text-white/40 text-xs md:text-sm">{returningProfile.phoneNumber}</p>
+                            <h3 className="text-white font-bold text-base md:text-lg">{returningProfile.fullName || 'Guest User'}</h3>
+                            <p className="text-white/40 text-xs md:text-sm">{returningProfile.phoneNumber || 'No phone number'}</p>
                         </div>
                     </div>
                     <div className="flex flex-col gap-3">
                         <div className="flex justify-between items-center text-xs md:text-sm">
                             <span className="text-white/40">City</span>
-                            <span className="text-white font-medium">{returningProfile.city}</span>
+                            <span className="text-white font-medium">{returningProfile.city || 'Not set'}</span>
                         </div>
                         {returningProfile.instagramHandle && (
                             <div className="flex justify-between items-center text-xs md:text-sm">
@@ -348,12 +382,20 @@ const ProfileStep = ({ data, update, onNext, onBack, returningProfile, useReturn
                     >
                         CONTINUE AS {(returningProfile.fullName?.split(' ')[0] || 'User').toUpperCase()}
                     </button>
-                    <button
-                        onClick={() => setUseReturnedProfile(false)}
-                        className="text-white/40 font-bold hover:text-white transition-all uppercase tracking-widest text-xs py-2"
-                    >
-                        Edit Profile Details
-                    </button>
+                    <div className="flex flex-col items-center gap-2">
+                        <button
+                            onClick={() => setUseReturnedProfile(false)}
+                            className="text-white/60 font-bold hover:text-white transition-all uppercase tracking-widest text-[10px] md:text-xs py-2"
+                        >
+                            Edit Profile Details
+                        </button>
+                        <button
+                            onClick={onClear}
+                            className="text-red-500/50 font-bold hover:text-red-500 transition-all uppercase tracking-widest text-[10px] md:text-xs py-2"
+                        >
+                            Reset & Clear Form
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -519,7 +561,7 @@ const DesignStep = ({ data, update, onNext, onBack }: any) => {
                     >
                         <div className={cn(
                             "size-12 md:size-16 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-500",
-                            data.orderType === type.id
+                            data?.orderType === type.id
                                 ? (type.color === 'primary' ? "bg-primary text-white shadow-lg shadow-primary/40" : "bg-secondary-cyan text-black")
                                 : "bg-white/5 text-white/40 group-hover:text-white"
                         )}>
@@ -531,7 +573,7 @@ const DesignStep = ({ data, update, onNext, onBack }: any) => {
                         </div>
                         <div className={cn(
                             "absolute -bottom-10 -right-10 size-40 rounded-full blur-[80px] transition-all duration-700",
-                            data.orderType === type.id
+                            data?.orderType === type.id
                                 ? (type.color === 'primary' ? "bg-primary/40" : "bg-secondary-cyan/40")
                                 : "bg-transparent"
                         )} />
@@ -993,7 +1035,7 @@ const ReviewStep = ({ data, isSubmitting, onSubmit, onBack, error, update, editO
                 <ReviewItem label="Style" value={data.orderType?.replace('_', ' ').toUpperCase()} />
                 <ReviewItem label="Occasion" value={data.occasion?.toUpperCase()} />
                 <ReviewItem label="Fabric" value={data.fabricPreference} />
-                <ReviewItem label="Event Date" value={new Date(data.eventDate).toLocaleDateString()} />
+                <ReviewItem label="Event Date" value={data.eventDate ? new Date(data.eventDate).toLocaleDateString() : 'Not set'} />
                 <ReviewItem label="Measurements" value={`${Object.keys(data.measurements || {}).length} recorded`} />
             </div>
 
