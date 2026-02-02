@@ -50,6 +50,7 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
         };
 
         if (editOrder) {
+            console.log("OrderFlow: Initializing with editOrder", editOrder);
             return {
                 ...defaults,
                 fullName: editOrder.clientProfile?.fullName || '',
@@ -72,16 +73,20 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
         if (saved) {
             try {
                 const parsed = JSON.parse(saved);
+                console.log("OrderFlow: Initializing with saved data", parsed);
                 return { ...defaults, ...parsed, measurements: parsed.measurements || {} };
             } catch (e) {
                 console.error('Failed to parse saved form data', e);
             }
         }
+        console.log("OrderFlow: Initializing with defaults");
         return defaults;
     });
 
     useEffect(() => {
-        if (collectionId) {
+        // Only process collectionId if it's a valid string ID
+        if (collectionId && typeof collectionId === 'string') {
+            console.log("OrderFlow: Applying collectionId", collectionId);
             updateFormData({
                 collectionId,
                 orderType: 'signature_dress' // Default to signature for collections
@@ -104,6 +109,7 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
                 // @ts-ignore
                 const { userService } = await import('../services/api');
                 const data = await userService.getProfile();
+                console.log("OrderFlow: Profile fetched", data);
                 if (data && data.profile) {
                     setReturningProfile(data.profile);
                     setUseReturnedProfile(true);
@@ -111,26 +117,31 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
                     // Only update if we don't already have unsaved work
                     const saved = localStorage.getItem('kofi_order_form');
                     if (!saved) {
+                        console.log("OrderFlow: Updating form with profile data");
                         updateFormData(data.profile);
                     }
 
                     // Auto-skip logic
                     setStep(current => {
-                        if (current === 1) {
-                            return collectionId ? 3 : 2;
-                        }
-                        return current;
+                        const skipTo = collectionId ? 3 : 2;
+                        const nextStep = current === 1 ? skipTo : current;
+                        console.log(`OrderFlow: Auto-skip logic. Current: ${current}, CollectionId: ${collectionId}, Result: ${nextStep}`);
+                        return nextStep;
                     });
                 }
             } catch (error) {
-                console.error("Failed to fetch profile", error);
+                console.error("OrderFlow: Failed to fetch profile", error);
             }
         };
         fetchProfile();
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('kofi_order_form', JSON.stringify(formData));
+        try {
+            localStorage.setItem('kofi_order_form', JSON.stringify(formData));
+        } catch (e) {
+            console.error("OrderFlow: Failed to save form data to localStorage (circular structure or too large)", e);
+        }
     }, [formData]);
 
 
@@ -222,6 +233,8 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
         }
     };
 
+    console.log(`OrderFlow: Rendering Step ${step}`, { collectionId, formData });
+
     return (
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8">
             <AnimatePresence mode="wait">
@@ -232,6 +245,7 @@ export const OrderFlow = ({ onBack, collectionId, editOrder }: OrderFlowProps) =
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 >
+                    {(() => { console.log(`OrderFlow: Animating step ${step}`); return null; })()}
                     {step === 1 && (
                         <ProfileStep
                             data={formData}
@@ -554,7 +568,7 @@ const DesignStep = ({ data, update, onNext, onBack }: any) => {
                         onClick={() => update({ orderType: type.id })}
                         className={cn(
                             "group cursor-pointer p-8 md:p-10 rounded-3xl md:rounded-[2.5rem] border transition-all duration-500 relative overflow-hidden flex flex-col gap-8 md:gap-12",
-                            data.orderType === type.id
+                            data?.orderType === type.id
                                 ? (type.color === 'primary' ? "bg-primary/10 border-primary" : "bg-secondary-cyan/10 border-secondary-cyan")
                                 : "bg-white/5 border-white/5 hover:border-white/20"
                         )}
@@ -590,7 +604,7 @@ const DesignStep = ({ data, update, onNext, onBack }: any) => {
                             onClick={() => update({ occasion: occ.id })}
                             className={cn(
                                 "flex flex-col items-center gap-4 md:gap-6 p-6 md:p-8 rounded-2xl md:rounded-3xl border transition-all group",
-                                data.occasion === occ.id
+                                data?.occasion === occ.id
                                     ? "bg-primary text-white border-primary shadow-xl shadow-primary/20"
                                     : "bg-white/5 border-white/5 text-white/40 hover:border-white/20 hover:text-white"
                             )}
