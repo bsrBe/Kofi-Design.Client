@@ -2,12 +2,11 @@ import bustDistanceImg from '../assets/gallery/photo_2026-02-02_09-49-13.jpg';
 import shoulderToBustImg from '../assets/gallery/photo_2026-02-02_09-49-38.jpg';
 import neckDepthImg from '../assets/gallery/photo_2026-02-02_09-49-42.jpg';
 import neckCircImg from '../assets/gallery/photo_2026-02-02_09-49-45.jpg';
-import chestFrontImg from '../assets/gallery/photo_2026-02-02_09-49-56.jpg';
+import chestFrontImg from '../assets/chest-front-guide.png';
 import chestBackImg from '../assets/gallery/photo_2026-02-02_09-50-01.jpg';
 import shoulderWidthImg from '../assets/gallery/photo_2026-02-02_09-50-07.jpg';
 import backLengthImg from '../assets/gallery/photo_2026-02-02_09-50-11.jpg';
 import frontLengthImg from '../assets/gallery/photo_2026-02-02_09-50-14.jpg';
-import shoulderWaistBackImg from '../assets/gallery/photo_2026-02-02_09-50-18.jpg';
 import shoulderWaistFrontImg from '../assets/gallery/photo_2026-02-02_09-50-21.jpg';
 import skirtLengthImg from '../assets/gallery/photo_2026-02-02_09-50-28.jpg';
 import dressLengthImg from '../assets/gallery/photo_2026-02-02_09-50-32.jpg';
@@ -19,9 +18,10 @@ import highHipImg from '../assets/gallery/photo_2026-02-02_09-51-09.jpg';
 
 // New high-resolution PNG guides from assets root
 import wristElbowGuide from '../assets/arm-length-guide.png';
-import compositeGuide from '../assets/measurement-guide.png';
-import shoulderGuide from '../assets/shoulder-guide.png';
 import waistGuide from '../assets/waist-guide.png';
+import crotchDepthGuide from '../assets/crotch-depth-guide.png';
+import crotchLengthGuide from '../assets/crotch-length-guide.png';
+import shoulderSlopeGuide from '../assets/shoulder-slope-guide.png';
 
 export interface MeasurementField {
     key: string;
@@ -121,8 +121,8 @@ export const MEASUREMENT_SCHEMES: Record<string, MeasurementSection[]> = {
         {
             section: "Rise & Length",
             fields: [
-                { key: 'crotchDepth', label: 'Crotch Depth', sub: 'Waist to chair (sitting)', guide: 'Measure from the waist to the chair surface while sitting.', image: compositeGuide },
-                { key: 'crotchLength', label: 'Crotch Length', sub: 'Waist (front) to waist (back)', guide: 'Measure from the front waist, under the crotch, to the back waist.', image: compositeGuide },
+                { key: 'crotchDepth', label: 'Crotch Depth', sub: 'Waist to chair (sitting)', guide: 'Measure from the waist to the chair surface while sitting.', image: crotchDepthGuide },
+                { key: 'crotchLength', label: 'Crotch Length', sub: 'Waist (front) to waist (back)', guide: 'Measure from the front waist, under the crotch, to the back waist.', image: crotchLengthGuide },
                 { key: 'inseam', label: 'Inseam', sub: 'Crotch to ankle', guide: 'Measure from the crotch down the inside of the leg to the ankle.', image: skirtLengthImg },
                 { key: 'outseam', label: 'Outseam', sub: 'Waist to ankle', guide: 'Measure from the waist down the outside of the leg to the ankle.', image: skirtLengthImg },
             ]
@@ -150,7 +150,7 @@ export const MEASUREMENT_SCHEMES: Record<string, MeasurementSection[]> = {
             section: "Shoulder & Length",
             fields: [
                 { key: 'shoulderWidth', label: 'Shoulder Width', sub: 'Across back', guide: 'Measure across the back from shoulder point to shoulder point.', image: shoulderWidthImg },
-                { key: 'shoulderSlope', label: 'Shoulder Slope', sub: 'Angle', guide: 'Measure the angle of your shoulder from the neck base.', image: shoulderGuide },
+                { key: 'shoulderSlope', label: 'Shoulder Slope', sub: 'Angle', guide: 'Measure the angle of your shoulder from the neck base.', image: shoulderSlopeGuide },
                 { key: 'jacketLength', label: 'Jacket Length', sub: 'Shoulder to desired hem', guide: 'Measure from the shoulder point down to the desired jacket length.', image: frontLengthImg },
                 { key: 'backLength', label: 'Back Length', sub: 'Neck to waist', guide: 'Measure from the base of the neck to the waistline.', image: backLengthImg },
                 { key: 'backWidth', label: 'Back Width', sub: 'Across back blades', guide: 'Measure across the back blades.', image: chestBackImg },
